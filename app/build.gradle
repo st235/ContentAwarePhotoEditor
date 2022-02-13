@@ -46,4 +46,5 @@ dependencies {
     implementation libs.viewModel
     implementation libs.liveData
     implementation libs.picasso
+    implementation libs.glide
 }

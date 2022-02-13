@@ -1,4 +1,4 @@
-package st235.com.github.seamcarving.data.media
+package st235.com.github.seamcarving.utils.media
 
 import android.annotation.TargetApi
 import android.content.ContentResolver
@@ -96,10 +96,7 @@ class NewApiMediaSaver(
         values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
         values.put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis())
         values.put(MediaStore.MediaColumns.RELATIVE_PATH, path)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
-        }
+        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
 
         val uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
 

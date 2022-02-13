@@ -1,70 +1,46 @@
-package st235.com.github.seamcarving.data.media
+package st235.com.github.seamcarving.utils.media
 
-import android.annotation.TargetApi
 import android.content.ContentResolver
 import android.content.ContentUris
 import android.net.Uri
-import android.os.Build
-import android.os.Environment
 import android.provider.MediaStore
 import androidx.annotation.WorkerThread
 import androidx.core.database.getStringOrNull
-import java.io.File
-import java.io.FilenameFilter
 import java.util.Locale
+
+data class MediaInfo(
+    val id: String,
+    val name: String,
+    val description: String?,
+    val height: Int,
+    val width: Int,
+    val uri: Uri
+)
 
 interface MediaScanner {
 
-    fun loadFiles(): List<Uri>
+    fun loadFiles(): List<MediaInfo>
 
     companion object {
         fun create(contentResolver: ContentResolver, albumTitle: String): MediaScanner {
-            return if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
-                OldApiMediaScanner(albumTitle)
-            } else {
-                NewApiMediaScanner(contentResolver, albumTitle)
-            }
+            return NewApiMediaScanner(contentResolver, albumTitle)
         }
     }
 }
 
-@WorkerThread
-class OldApiMediaScanner(
-    private val albumTitle: String
-) : MediaScanner {
-
-    private val albumDir: File
-        get() {
-            return File(
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                albumTitle
-            )
-        }
-
-    override fun loadFiles(): List<Uri> {
-        val album = albumDir
-        val regexp = "/${albumTitle}/.*\\.(png|jpg)".toRegex()
-
-        val filter = FilenameFilter { dir, name ->
-            val fullPath = dir.absolutePath + File.separator + name
-            fullPath.contains(regexp)
-        }
-
-        return album.listFiles(filter)?.sortedByDescending { it.lastModified() }?.mapNotNull { Uri.fromFile(it) } ?: emptyList()
-    }
-}
-
-@TargetApi(Build.VERSION_CODES.Q)
 @WorkerThread
 class NewApiMediaScanner(
     private val contentResolver: ContentResolver,
     private val albumTitle: String
 ) : MediaScanner {
 
-    override fun loadFiles(): List<Uri> {
+    override fun loadFiles(): List<MediaInfo> {
         val what = arrayOf(
             MediaStore.Images.ImageColumns._ID,
             MediaStore.Images.ImageColumns.MIME_TYPE,
+            MediaStore.Images.ImageColumns.ORIENTATION,
+            MediaStore.Images.ImageColumns.DISPLAY_NAME,
+            MediaStore.Images.ImageColumns.DESCRIPTION,
             MediaStore.Images.ImageColumns.DATE_MODIFIED,
             MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME
         )
@@ -80,7 +56,7 @@ class NewApiMediaScanner(
             MediaStore.Images.ImageColumns.DATE_MODIFIED + " DESC"
         ) ?: return emptyList()
 
-        val files = mutableListOf<Uri>()
+        val mediaInfos = mutableListOf<MediaInfo>()
 
         while (cursor.moveToNext()) {
             val bucketName =
@@ -90,23 +66,37 @@ class NewApiMediaScanner(
                 continue
             }
 
-            val columnIndex = cursor.getColumnIndex(MediaStore.Images.ImageColumns._ID)
+            val idColumnIndex = cursor.getColumnIndex(MediaStore.Images.ImageColumns._ID)
 
-            if (columnIndex < 0) {
-                continue
-            }
+            val id = cursor.getInt(idColumnIndex);
+            val name = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.ImageColumns.DISPLAY_NAME))
+            val description = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.ImageColumns.DESCRIPTION))
 
             val imageUri = ContentUris
                 .withAppendedId(
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                    cursor.getInt(columnIndex).toLong()
+                    cursor.getInt(idColumnIndex).toLong()
                 )
 
-            files.add(imageUri)
+            val realSize = MediaHelper.loadSize(
+                contentResolver,
+                imageUri
+            )
+
+            mediaInfos.add(
+                MediaInfo(
+                    id = id.toString(),
+                    name = name,
+                    description = description,
+                    width = realSize[0],
+                    height = realSize[1],
+                    uri = imageUri
+                )
+            )
         }
 
         cursor.close()
 
-        return files
+        return mediaInfos
     }
 }
