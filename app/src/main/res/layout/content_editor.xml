@@ -13,4 +13,40 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintDimensionRatio="1:1" />
 
+    <Button
+        android:id="@+id/add"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        style="?attr/materialButtonOutlinedStyle"
+        app:layout_constraintEnd_toStartOf="@id/remove"
+        android:layout_margin="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editor_view"
+        />
+
+    <Button
+        android:id="@+id/remove"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Remove"
+        android:layout_margin="8dp"
+        style="?attr/materialButtonOutlinedStyle"
+        app:layout_constraintStart_toEndOf="@id/add"
+        app:layout_constraintEnd_toStartOf="@id/eraser"
+        app:layout_constraintTop_toBottomOf="@id/editor_view"
+        />
+
+    <Button
+        android:id="@+id/eraser"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Eraser"
+        android:layout_margin="8dp"
+        style="?attr/materialButtonOutlinedStyle"
+        app:layout_constraintStart_toEndOf="@id/remove"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editor_view"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

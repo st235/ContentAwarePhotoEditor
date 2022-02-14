@@ -5,30 +5,69 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.Path
+import android.graphics.PointF
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.annotation.ColorInt
+import androidx.annotation.Px
 
 class EditorView: View {
 
-    private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    var foregroundImage: Drawable? = null
+        set(newValue) {
+            field = newValue
+            field?.fitIntoView(foregroundBoundsRect)
 
-    private var editableRadius: Float = 64F
+            initEditableArea()
+            invalidate()
+        }
 
+    @get:ColorInt
+    var editBrush: Int
+    get() {
+        return paint.color
+    }
+    set(@ColorInt newValue) {
+        paint.color = newValue
+        invalidate()
+    }
+
+    @get:Px
+    var editRadius: Float
+    get() {
+        return paint.strokeWidth
+    }
+    set(@Px newValue) {
+        paint.strokeWidth = newValue
+        invalidate()
+    }
+
+    private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = Color.TRANSPARENT
+        style = Paint.Style.STROKE
+        strokeWidth = 64F
+        strokeCap = Paint.Cap.ROUND
+        xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC)
+    }
+
+    private val points = mutableListOf<PointF>()
+    private val bufferPath = Path()
+
+
+    private val editablePaint = Paint(Paint.ANTI_ALIAS_FLAG and Paint.DITHER_FLAG).apply {
+        color = Color.BLACK
+        isFilterBitmap = true
+    }
     private var editableCanvas: Canvas? = null
     private var editableArea: Bitmap? = null
 
     private var foregroundBoundsRect = Rect()
-    var foregroundImage: Drawable? = null
-    set(newValue) {
-        field = newValue
-        field?.fitIntoView(foregroundBoundsRect)
-
-        initEditableArea()
-        invalidate()
-    }
 
     private val viewBounds = Rect()
 
@@ -45,6 +84,16 @@ class EditorView: View {
     init {
         isFocusable = true
         isClickable = true
+    }
+
+    fun getAreaSnapshot(): Bitmap? {
+        val area = editableArea
+
+        if (area == null) {
+            return null
+        }
+
+        return Bitmap.createBitmap(area)
     }
 
     private fun initEditableArea() {
@@ -80,8 +129,6 @@ class EditorView: View {
             return
         }
 
-        paint.color = Color.RED
-
         foregroundImage?.drawInCenter(canvas)
 
         val area = editableArea
@@ -91,9 +138,37 @@ class EditorView: View {
                 area,
                 foregroundBoundsRect.left.toFloat(),
                 foregroundBoundsRect.top.toFloat(),
-                paint
+                editablePaint
             )
         }
+
+        drawPath(canvas, foregroundBoundsRect.left, foregroundBoundsRect.top)
+    }
+
+    private fun drawPath(canvas: Canvas, offsetX: Int, offsetY: Int) {
+        if (points.isEmpty()) {
+            return
+        }
+
+        bufferPath.reset()
+
+        for ((index, point) in points.withIndex()) {
+            val x = offsetX + point.x
+            val y = offsetY + point.y
+
+            if (index == 0) {
+                bufferPath.moveTo(x, y)
+            } else if (index < points.size - 1) {
+                val nextX = offsetX + points[index + 1].x
+                val nextY = offsetY + points[index + 1].y
+
+                bufferPath.quadTo(x, y, nextX, nextY)
+            } else {
+                bufferPath.lineTo(x, y)
+            }
+        }
+
+        canvas.drawPath(bufferPath, paint)
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -102,6 +177,12 @@ class EditorView: View {
             MotionEvent.ACTION_MOVE -> {
                 modifyTheArea(event.x, event.y, foregroundBoundsRect)
                 invalidate()
+                true
+            }
+            MotionEvent.ACTION_CANCEL,
+            MotionEvent.ACTION_UP -> {
+                drawPath(editableCanvas!!, 0, 0)
+                points.clear()
                 true
             }
             else -> {
@@ -113,7 +194,8 @@ class EditorView: View {
     private fun modifyTheArea(x: Float, y: Float, offsetRect: Rect) {
         val centerX = x - offsetRect.left
         val centerY = y - offsetRect.top
-        editableCanvas?.drawCircle(centerX, centerY, editableRadius, paint)
+
+        points.add(PointF(centerX, centerY))
     }
 
     private fun Drawable.drawInCenter(canvas: Canvas) {
