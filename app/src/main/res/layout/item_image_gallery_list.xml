@@ -5,22 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <st235.com.github.seamcarving.presentation.components.RoundFrameLayout
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_view"
+        style="@style/Widget.Material3.CardView.Outlined"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        app:rfl_backgroundRoundRadius="16dp">
+        android:clickable="true"
+        android:focusable="true"
+        android:checkable="true"
+        app:cardCornerRadius="16dp">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/image_view"
-            android:scaleType="centerCrop"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:scaleType="fitXY" />
 
-    </st235.com.github.seamcarving.presentation.components.RoundFrameLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 </st235.com.github.seamcarving.presentation.components.AspectRatioFrameLayout>

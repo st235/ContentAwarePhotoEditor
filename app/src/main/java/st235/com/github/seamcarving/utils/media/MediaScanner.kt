@@ -31,14 +31,15 @@ interface MediaScanner {
 @WorkerThread
 class NewApiMediaScanner(
     private val contentResolver: ContentResolver,
-    private val albumTitle: String
+    albumTitle: String
 ) : MediaScanner {
+
+    private val albumRegex = albumTitle.toRegex()
 
     override fun loadFiles(): List<MediaInfo> {
         val what = arrayOf(
             MediaStore.Images.ImageColumns._ID,
             MediaStore.Images.ImageColumns.MIME_TYPE,
-            MediaStore.Images.ImageColumns.ORIENTATION,
             MediaStore.Images.ImageColumns.DISPLAY_NAME,
             MediaStore.Images.ImageColumns.DESCRIPTION,
             MediaStore.Images.ImageColumns.DATE_MODIFIED,
@@ -62,7 +63,7 @@ class NewApiMediaScanner(
             val bucketName =
                 cursor.getStringOrNull(cursor.getColumnIndex(MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME))
 
-            if (bucketName?.lowercase(Locale.US) != albumTitle.lowercase(Locale.US)) {
+            if (bucketName?.contains(albumRegex) != true) {
                 continue
             }
 

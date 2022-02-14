@@ -9,9 +9,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterInside
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.card.MaterialCardView
 import st235.com.github.seamcarving.R
 import st235.com.github.seamcarving.interactors.models.ImageInfo
 import st235.com.github.seamcarving.interactors.models.ImageSize
@@ -21,8 +19,7 @@ class GalleryAdapter(
     private val onItemClickListener: (item: ImageInfo) -> Unit
 ): RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
 
-    private val aspectRatioHash = mutableMapOf<String, Float>()
-    private val asyncListDiffer = AsyncListDiffer<ImageInfo>(this, ItemCallback())
+    private val asyncListDiffer = AsyncListDiffer(this, ItemCallback())
 
     private val items: List<ImageInfo>
     get() {
@@ -35,7 +32,7 @@ class GalleryAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val context = parent.context
-        val view = LayoutInflater.from(context).inflate(R.layout.item_gallery_list_view, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.item_image_gallery_list, parent, false)
         return ViewHolder(view)
     }
 
@@ -67,11 +64,15 @@ class GalleryAdapter(
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+        val cardView: MaterialCardView = itemView.findViewById(R.id.card_view)
         val aspectRatioLayout: AspectRatioFrameLayout = itemView.findViewById(R.id.aspect_ratio_layout)
         val imageView: ImageView = itemView.findViewById(R.id.image_view)
 
         init {
-            itemView.setOnClickListener {
+            cardView.isClickable = true
+            cardView.isFocusable = true
+
+            cardView.setOnClickListener {
                 val item = items[adapterPosition]
                 onItemClickListener(item)
             }

@@ -9,7 +9,7 @@ import st235.com.github.seamcarving.interactors.GalleryInteractor
 import st235.com.github.seamcarving.presentation.editor.EditorViewModel
 import st235.com.github.seamcarving.presentation.gallery.GalleryViewModel
 
-private const val ALBUM_NAME = "camera"
+private const val ALBUM_NAME = ".*"
 
 val viewModelsModules = module {
 
