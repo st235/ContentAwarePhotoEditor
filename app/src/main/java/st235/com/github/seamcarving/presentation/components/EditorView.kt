@@ -145,8 +145,8 @@ class EditorView: View {
         drawPath(canvas, foregroundBoundsRect.left, foregroundBoundsRect.top)
     }
 
-    private fun drawPath(canvas: Canvas, offsetX: Int, offsetY: Int) {
-        if (points.isEmpty()) {
+    private fun drawPath(canvas: Canvas?, offsetX: Int, offsetY: Int) {
+        if (points.isEmpty() || canvas == null) {
             return
         }
 
@@ -175,14 +175,20 @@ class EditorView: View {
         return when (event?.action) {
             MotionEvent.ACTION_DOWN,
             MotionEvent.ACTION_MOVE -> {
-                modifyTheArea(event.x, event.y, foregroundBoundsRect)
+                val point = obtainNewPoint(event.x, event.y, foregroundBoundsRect)
+
+                if (point == null) {
+                    resetPath()
+                } else {
+                    points.add(point)
+                }
+
                 invalidate()
                 true
             }
             MotionEvent.ACTION_CANCEL,
             MotionEvent.ACTION_UP -> {
-                drawPath(editableCanvas!!, 0, 0)
-                points.clear()
+                resetPath()
                 true
             }
             else -> {
@@ -191,11 +197,19 @@ class EditorView: View {
         }
     }
 
-    private fun modifyTheArea(x: Float, y: Float, offsetRect: Rect) {
+    private fun obtainNewPoint(x: Float, y: Float, offsetRect: Rect): PointF? {
+        if (!foregroundBoundsRect.contains(x.toInt(), y.toInt())) {
+            return null
+        }
+
         val centerX = x - offsetRect.left
         val centerY = y - offsetRect.top
+        return PointF(centerX, centerY)
+    }
 
-        points.add(PointF(centerX, centerY))
+    private fun resetPath() {
+        drawPath(editableCanvas, 0, 0)
+        points.clear()
     }
 
     private fun Drawable.drawInCenter(canvas: Canvas) {

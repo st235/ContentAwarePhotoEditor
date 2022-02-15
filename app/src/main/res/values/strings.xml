@@ -3,4 +3,9 @@
 
     <!-- Fragment Gallery List -->
     <string name="fragment_gallery_list_create_button_title">New project</string>
+
+    <!-- Activity Editor -->
+    <string name="activity_editor_select_header">Select image</string>
+    <string name="activity_editor_select_photo_from_gallery">Gallery</string>
+    <string name="activity_editor_select_photo_from_camera">Camera</string>
 </resources>
