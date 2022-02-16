@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fragment Editor Options Home -->
+    <item name="editor_option_brush" type="id" />
+    <item name="editor_option_sizes" type="id" />
+    <item name="editor_option_modes" type="id" />
+
+    <!-- Fragment Editor Brush -->
+    <item name="editor_brush_keep" type="id" />
+    <item name="editor_brush_remove" type="id" />
+    <item name="editor_brush_clear" type="id" />
+
+</resources>

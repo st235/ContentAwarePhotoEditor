@@ -96,6 +96,11 @@ class EditorView: View {
         return Bitmap.createBitmap(area)
     }
 
+    fun clear() {
+        editableCanvas?.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
+        invalidate()
+    }
+
     private fun initEditableArea() {
         val width = foregroundBoundsRect.width()
         val height = foregroundBoundsRect.height()

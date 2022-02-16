@@ -2,10 +2,23 @@
     <string name="app_name">Content Aware Resizing</string>
 
     <!-- Fragment Gallery List -->
-    <string name="fragment_gallery_list_create_button_title">New project</string>
+    <string name="fragment_gallery_list_create_button_title">Create from gallery</string>
 
     <!-- Activity Editor -->
-    <string name="activity_editor_select_header">Select image</string>
+    <string name="activity_editor_select_header">Pick the image</string>
     <string name="activity_editor_select_photo_from_gallery">Gallery</string>
     <string name="activity_editor_select_photo_from_camera">Camera</string>
+
+    <string name="activity_editor_save_button">Save</string>
+    <string name="activity_editor_reset_button">Reset</string>
+
+    <!-- Fragment Editor Options Home -->
+    <string name="fragment_editor_options_home_menu_brush">Brush</string>
+    <string name="fragment_editor_options_home_menu_sizes">Sizes</string>
+    <string name="fragment_editor_options_home_menu_mode">Mode</string>
+
+    <!-- Fragment Editor Brush -->
+    <string name="fragment_editor_brush_keep">Keep</string>
+    <string name="fragment_editor_brush_remove">Remove</string>
+    <string name="fragment_editor_brush_clear">Clear</string>
 </resources>

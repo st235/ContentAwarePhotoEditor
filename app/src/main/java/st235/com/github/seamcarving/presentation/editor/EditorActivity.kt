@@ -2,18 +2,16 @@ package st235.com.github.seamcarving.presentation.editor
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.MenuItem
-import androidx.activity.result.ActivityResultCallback
-import androidx.activity.result.contract.ActivityResultContract
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.button.MaterialButton
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import st235.com.github.seamcarving.R
-
+import st235.com.github.seamcarving.presentation.editor.options.EditorHomeOptions
+import st235.com.github.seamcarving.presentation.editor.options.EditorOptionsHomeFragment
+import st235.com.github.seamcarving.presentation.editor.options.brushes.EditorBrushFragment
 
 class EditorActivity: AppCompatActivity() {
 
@@ -22,19 +20,6 @@ class EditorActivity: AppCompatActivity() {
     private lateinit var toolbar: MaterialToolbar
 
     private lateinit var editorViewDelegate: EditorViewDelegate
-
-    private lateinit var galleryPickerButton: MaterialButton
-    private lateinit var cameraPickerButton: MaterialButton
-
-    private val onOpenGalleryResultLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult(),
-        ActivityResultCallback { result ->
-            val imageUri = result.data?.data
-            if (imageUri != null) {
-                editorViewDelegate.updateImage(imageUri)
-            }
-        }
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,33 +30,31 @@ class EditorActivity: AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         editorViewDelegate = EditorViewDelegate(findViewById(R.id.editor_content_root_view))
-        cameraPickerButton = findViewById(R.id.camera_picker_image_button)
-        galleryPickerButton = findViewById(R.id.gallery_picker_image_button)
+        editorViewDelegate.updateImage(extractImageUri())
 
-        cameraPickerButton.setOnClickListener {
-            onOpenCameraClick()
-        }
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.editor_options_container, EditorOptionsHomeFragment(), EditorOptionsHomeFragment.TAG)
+            .commit()
 
-        galleryPickerButton.setOnClickListener {
-            onOpenGalleryClick()
-        }
-    }
+        editorViewModel.observeOptionScreenData()
+            .observe(this) { type ->
+                val fragment = when (type) {
+                    EditorHomeOptions.BRUSH -> EditorBrushFragment()
+                    else -> null
+                }
 
-    private fun onOpenCameraClick() {
-        val intent = Intent(
-            MediaStore.ACTION_IMAGE_CAPTURE
-        )
+                if (fragment != null) {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.editor_options_container, fragment, EditorOptionsHomeFragment.CHILD_TAG)
+                        .addToBackStack(EditorOptionsHomeFragment.CHILD_TAG)
+                        .commit()
+                }
+            }
 
-        onOpenGalleryResultLauncher.launch(intent)
-    }
-
-    private fun onOpenGalleryClick() {
-        val intent = Intent(
-            Intent.ACTION_PICK,
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        )
-
-        onOpenGalleryResultLauncher.launch(intent)
+        editorViewModel.observeBrushType()
+            .observe(this) { brushType ->
+                editorViewDelegate.updateBrushType(brushType)
+            }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -86,10 +69,24 @@ class EditorActivity: AppCompatActivity() {
         }
     }
 
+    private fun extractImageUri(): Uri {
+        return intent?.getParcelableExtra(ARGS_IMAGE_URI) ?:
+            throw IllegalStateException("EditorActivity cannot be started without a uri")
+    }
+
     companion object {
 
-        fun launchIntent(context: Context): Intent {
-            return Intent(context, EditorActivity::class.java)
+        private const val ARGS_IMAGE_URI = "args.image_uri"
+
+        fun launchIntent(context: Context, imageUri: Uri): Intent {
+            val intent = Intent(context, EditorActivity::class.java)
+
+            val bundle = Bundle()
+            bundle.putParcelable(ARGS_IMAGE_URI, imageUri)
+
+            intent.putExtras(bundle)
+
+            return intent
         }
 
     }
