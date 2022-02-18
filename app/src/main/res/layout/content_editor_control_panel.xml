@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="none"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <st235.com.github.seamcarving.presentation.components.ToggleGroupLayout
+        android:id="@+id/editor_control_panel_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical">
+
+        <st235.com.github.seamcarving.presentation.editor.options.EditorControlPanelView
+            android:id="@+id/editor_option_brush"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            style="@style/EditorControlPanelView.Item"
+            app:toggleable="true"
+            app:ecpv_icon="@drawable/ic_twotone_brush"
+            app:ecpv_text="@string/fragment_editor_options_home_menu_brush" />
+
+        <st235.com.github.seamcarving.presentation.editor.options.EditorControlPanelView
+            android:id="@+id/editor_option_sizes"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            style="@style/EditorControlPanelView.Item"
+            app:toggleable="true"
+            app:ecpv_icon="@drawable/ic_twotone_straighten"
+            app:ecpv_text="@string/fragment_editor_options_home_menu_sizes" />
+
+        <st235.com.github.seamcarving.presentation.editor.options.EditorControlPanelView
+            android:id="@+id/editor_option_modes"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            style="@style/EditorControlPanelView.Item"
+            app:toggleable="true"
+            app:ecpv_icon="@drawable/ic_twotone_aspect_ratio"
+            app:ecpv_text="@string/fragment_editor_options_home_menu_mode" />
+
+        <st235.com.github.seamcarving.presentation.editor.options.EditorControlPanelView
+            android:id="@+id/editor_option_reset"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            style="@style/EditorControlPanelView.Item"
+            app:ecpv_icon="@drawable/ic_twotone_remove"
+            app:ecpv_text="@string/fragment_editor_options_home_menu_reset" />
+
+        <st235.com.github.seamcarving.presentation.editor.options.EditorControlPanelView
+            android:id="@+id/editor_option_accept"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            style="@style/EditorControlPanelView.Item"
+            app:ecpv_icon="@drawable/ic_twotone_done"
+            app:ecpv_text="@string/fragment_editor_options_home_menu_accept" />
+
+    </st235.com.github.seamcarving.presentation.components.ToggleGroupLayout>
+
+</HorizontalScrollView>

@@ -16,9 +16,11 @@
     <string name="fragment_editor_options_home_menu_brush">Brush</string>
     <string name="fragment_editor_options_home_menu_sizes">Sizes</string>
     <string name="fragment_editor_options_home_menu_mode">Mode</string>
+    <string name="fragment_editor_options_home_menu_reset">Reset</string>
+    <string name="fragment_editor_options_home_menu_accept">Apply</string>
 
     <!-- Fragment Editor Brush -->
     <string name="fragment_editor_brush_keep">Keep</string>
     <string name="fragment_editor_brush_remove">Remove</string>
-    <string name="fragment_editor_brush_clear">Clear</string>
+    <string name="fragment_editor_brush_erase">Erase</string>
 </resources>

@@ -25,14 +25,6 @@ class EditorViewDelegate(
     private val backgroundView: ImageView = rootView.findViewById(R.id.background_image_view)
     private val editorView: EditorView = rootView.findViewById(R.id.editor_view)
 
-    private val resetButton: Button = rootView.findViewById(R.id.editor_reset_button)
-
-    init {
-        resetButton.setOnClickListener {
-            editorView.clear()
-        }
-    }
-
     private val context: Context
     get() {
         return rootView.context

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="EditorControlPanelView" />
+
+    <style name="EditorControlPanelView.Item">
+        <item name="ecpv_iconBackground">@drawable/control_panel_item_background</item>
+        <item name="ecpv_iconTint">@color/control_panel_item_background_tint</item>
+    </style>
+
+    <style name="EditorControlPanelView.SubItem">
+        <item name="ecpv_iconBackground">@drawable/control_panel_subitem_background</item>
+        <item name="ecpv_iconTint">@color/control_panel_subitem_background_tint</item>
+    </style>
+</resources>

@@ -1,12 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:scrollbars="none"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <st235.com.github.seamcarving.presentation.components.ToggleGroupLayout
+        android:id="@+id/brush_options_layout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
 
-</FrameLayout>
+        <st235.com.github.seamcarving.presentation.editor.options.EditorControlPanelView
+            android:id="@+id/editor_brush_keep"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            style="@style/EditorControlPanelView.SubItem"
+            app:toggleable="true"
+            app:ecpv_icon="@drawable/ic_twotone_add_circle"
+            app:ecpv_text="@string/fragment_editor_brush_keep" />
+
+        <st235.com.github.seamcarving.presentation.editor.options.EditorControlPanelView
+            android:id="@+id/editor_brush_remove"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            style="@style/EditorControlPanelView.SubItem"
+            app:toggleable="true"
+            app:ecpv_icon="@drawable/ic_twotone_remove_circle"
+            app:ecpv_text="@string/fragment_editor_brush_remove" />
+
+        <st235.com.github.seamcarving.presentation.editor.options.EditorControlPanelView
+            android:id="@+id/editor_brush_erase"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            style="@style/EditorControlPanelView.SubItem"
+            app:toggleable="true"
+            app:ecpv_icon="@drawable/ic_twotone_highlight_off"
+            app:ecpv_text="@string/fragment_editor_brush_erase" />
+
+    </st235.com.github.seamcarving.presentation.components.ToggleGroupLayout>
+
+</HorizontalScrollView>

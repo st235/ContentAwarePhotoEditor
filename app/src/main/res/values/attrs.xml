@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="RoundFrameLayout">
-        <attr name="rfl_backgroundRoundRadius" format="dimension" />
-        <attr name="rfl_elevation" format="dimension" />
-        <attr name="rfl_isSquare" format="boolean" />
+    <attr name="toggleable" format="boolean" />
+
+    <declare-styleable name="EditorControlPanelView">
+        <attr name="toggleable" />
+
+        <attr name="ecpv_text" format="string" />
+        <attr name="ecpv_icon" format="reference" />
+        <attr name="ecpv_iconBackground" format="reference" />
+        <attr name="ecpv_iconTint" format="reference" />
     </declare-styleable>
 </resources>

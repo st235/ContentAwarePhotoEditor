@@ -13,7 +13,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="12dp"
         app:cardCornerRadius="32dp"
         app:layout_constraintBottom_toTopOf="@id/editor_options_container"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,40 +44,19 @@
     <FrameLayout
         android:id="@+id/editor_options_container"
         android:layout_width="0dp"
-        android:layout_height="128dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@id/editor_publish_button"
+        android:layout_height="@dimen/editor_control_panel_height"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toTopOf="@id/editor_control_panel_recycler_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/editor_publish_button"
-        style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+    <include
+        android:id="@+id/editor_control_panel_recycler_view"
+        android:layout_height="@dimen/editor_control_panel_height"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="8dp"
-        app:icon="@drawable/ic_twotone_save"
-        app:iconGravity="textStart"
-        android:text="@string/activity_editor_save_button"
-        app:layout_constraintBottom_toTopOf="@id/editor_reset_button"
+        layout="@layout/content_editor_control_panel"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/editor_reset_button"
-        style="@style/Widget.Material3.Button.IconButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        app:icon="@drawable/ic_twotone_remove"
-        app:iconGravity="textStart"
-        android:text="@string/activity_editor_reset_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
