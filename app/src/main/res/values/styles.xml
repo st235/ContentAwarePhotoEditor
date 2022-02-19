@@ -5,10 +5,14 @@
     <style name="EditorControlPanelView.Item">
         <item name="ecpv_iconBackground">@drawable/control_panel_item_background</item>
         <item name="ecpv_iconTint">@color/control_panel_item_background_tint</item>
+        <item name="android:layout_marginStart">6dp</item>
+        <item name="android:layout_marginEnd">6dp</item>
     </style>
 
     <style name="EditorControlPanelView.SubItem">
         <item name="ecpv_iconBackground">@drawable/control_panel_subitem_background</item>
         <item name="ecpv_iconTint">@color/control_panel_subitem_background_tint</item>
+        <item name="android:layout_marginStart">2dp</item>
+        <item name="android:layout_marginEnd">2dp</item>
     </style>
 </resources>

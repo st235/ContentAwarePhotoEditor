@@ -1,6 +1,7 @@
 package st235.com.github.seamcarving.presentation.editor
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -31,11 +32,7 @@ class EditorViewDelegate(
     }
 
     fun updateBrushType(type: EditorBrush) {
-        editorView.editBrush =  when (type) {
-            EditorBrush.KEEP -> Color.argb((0.7 * 255).toInt(), 0, 255, 0)
-            EditorBrush.REMOVE -> Color.argb((0.7 * 255).toInt(), 255, 0, 0)
-            EditorBrush.CLEAR -> Color.TRANSPARENT
-        }
+        editorView.editBrush =  type.color
     }
 
     fun updateImage(uri: Uri) {
@@ -65,6 +62,14 @@ class EditorViewDelegate(
                 override fun onResourceCleared(placeholder: Drawable?) {
                 }
             })
+    }
+
+    fun getMatrix(): Bitmap? {
+        return editorView.getAreaSnapshot()
+    }
+
+    fun reset() {
+        editorView.clear()
     }
 
 }

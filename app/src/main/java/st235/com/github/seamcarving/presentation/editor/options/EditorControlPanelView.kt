@@ -25,7 +25,7 @@ class EditorControlPanelView @JvmOverloads constructor(
     init {
         orientation = VERTICAL
         gravity = Gravity.CENTER
-        setPadding(16.dp, 8.dp, 16.dp, 8.dp)
+        setPadding(12.dp, 4.dp, 12.dp, 4.dp)
 
         LayoutInflater.from(context).inflate(R.layout.content_editor_control_panel_view, this)
 

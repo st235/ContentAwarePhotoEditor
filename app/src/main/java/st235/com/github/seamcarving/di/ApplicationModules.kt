@@ -9,19 +9,17 @@ import st235.com.github.seamcarving.interactors.GalleryInteractor
 import st235.com.github.seamcarving.presentation.editor.EditorViewModel
 import st235.com.github.seamcarving.presentation.gallery.GalleryViewModel
 
-private const val ALBUM_NAME = ".*"
-
 val viewModelsModules = module {
 
     viewModel { GalleryViewModel(get()) }
 
-    viewModel { EditorViewModel() }
+    viewModel { EditorViewModel(get()) }
 
 }
 
 val interactorsModules = module {
 
-    single { GalleryInteractor(get()) }
+    single { GalleryInteractor(get(), get()) }
 
 }
 
@@ -29,12 +27,12 @@ val dataModules = module {
 
     single {
         val contentResolver = androidContext().contentResolver
-        MediaScanner.create(contentResolver, ALBUM_NAME)
+        MediaScanner.create(contentResolver)
     }
 
     single {
         val contentResolver = androidContext().contentResolver
-        MediaSaver.create(contentResolver, ALBUM_NAME)
+        MediaSaver.create(contentResolver)
     }
 
 }

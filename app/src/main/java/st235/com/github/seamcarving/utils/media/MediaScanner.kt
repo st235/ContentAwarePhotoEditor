@@ -3,6 +3,7 @@ package st235.com.github.seamcarving.utils.media
 import android.content.ContentResolver
 import android.content.ContentUris
 import android.net.Uri
+import android.os.Bundle
 import android.provider.MediaStore
 import androidx.annotation.WorkerThread
 import androidx.core.database.getStringOrNull
@@ -19,24 +20,32 @@ data class MediaInfo(
 
 interface MediaScanner {
 
-    fun loadFiles(): List<MediaInfo>
+    data class Page(
+        val limit: Int,
+        val offset: Int
+    )
+
+    fun loadFiles(
+        albumTitle: String
+    ): List<MediaInfo>
 
     companion object {
-        fun create(contentResolver: ContentResolver, albumTitle: String): MediaScanner {
-            return NewApiMediaScanner(contentResolver, albumTitle)
+        fun create(contentResolver: ContentResolver): MediaScanner {
+            return NewApiMediaScanner(contentResolver)
         }
     }
 }
 
 @WorkerThread
 class NewApiMediaScanner(
-    private val contentResolver: ContentResolver,
-    albumTitle: String
+    private val contentResolver: ContentResolver
 ) : MediaScanner {
 
-    private val albumRegex = albumTitle.toRegex()
+    override fun loadFiles(
+        albumTitle: String
+    ): List<MediaInfo> {
+        val albumRegex = albumTitle.toRegex()
 
-    override fun loadFiles(): List<MediaInfo> {
         val what = arrayOf(
             MediaStore.Images.ImageColumns._ID,
             MediaStore.Images.ImageColumns.MIME_TYPE,

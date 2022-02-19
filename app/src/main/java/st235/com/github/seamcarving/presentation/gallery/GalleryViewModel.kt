@@ -18,7 +18,7 @@ class GalleryViewModel(
 
     fun loadImages() {
         viewModelScope.launch {
-            val items = galleryInteractor.loadImages()
+            val items = galleryInteractor.loadImages(".*")
             imagesLiveData.value = items
         }
     }

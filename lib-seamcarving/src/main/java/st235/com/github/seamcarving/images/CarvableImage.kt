@@ -1,11 +1,17 @@
 package st235.com.github.seamcarving.images
 
-interface CarvableImage {
+import android.graphics.Color
 
-    val width: Int
+abstract class CarvableImage {
 
-    val height: Int
+    abstract val width: Int
 
-    fun getPixelAt(i: Int, j: Int): Int
+    abstract val height: Int
+
+    abstract val isMasked: Boolean
+
+    abstract fun getMaskPixel(i: Int, j: Int): Int?
+
+    abstract fun getPixelAt(i: Int, j: Int): Int
 
 }

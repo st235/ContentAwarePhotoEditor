@@ -47,7 +47,7 @@
             app:ecpv_text="@string/fragment_editor_options_home_menu_reset" />
 
         <st235.com.github.seamcarving.presentation.editor.options.EditorControlPanelView
-            android:id="@+id/editor_option_accept"
+            android:id="@+id/editor_option_apply"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             style="@style/EditorControlPanelView.Item"

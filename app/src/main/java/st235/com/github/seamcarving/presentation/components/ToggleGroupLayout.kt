@@ -96,6 +96,7 @@ class ToggleGroupLayout: LinearLayout {
         val isToggleable = (viewCandidate as? Toggleable)?.isToggleable ?: false
 
         if (!isToggleable) {
+            onSelectedListener?.invoke(viewCandidate)
             return
         }
 
