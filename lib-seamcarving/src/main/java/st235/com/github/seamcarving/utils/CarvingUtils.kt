@@ -126,9 +126,9 @@ internal object CarvingUtils {
      * Runtime complexity: O(w * h)
      */
     fun removeSeams(image: CarvableImage, seamsToRemove: Int, mask: Array<BooleanArray>): CarvableImage {
-        val newImage = Array(image.height) { IntArray(image.width ) }
+        val newImage = Array(image.height) { IntArray(image.width - seamsToRemove) }
         val maskMatrix = if (image.isMasked) {
-            null//Array(image.height) { IntArray(image.width - seamsToRemove) }
+            Array(image.height) { IntArray(image.width - seamsToRemove) }
         } else {
             null
         }
@@ -138,13 +138,12 @@ internal object CarvingUtils {
 
             for (j in 0 until image.width) {
                 if (mask[i][j]) {
-                    newImage[i][j] = Color.RED
                     continue
                 }
 
-                newImage[i][j] = image.getPixelAt(i, j)
-//                maskMatrix?.get(i)?.set(newJ, image.getMaskPixel(i, j) ?: 0)
-//                newJ++
+                newImage[i][newJ] = image.getPixelAt(i, j)
+                maskMatrix?.get(i)?.set(newJ, image.getMaskPixel(i, j) ?: 0)
+                newJ++
             }
         }
 
