@@ -8,7 +8,7 @@ import st235.com.github.seamcarving.images.CarvableImage
 
 internal class GradientEnergy: Energy() {
 
-    override fun energyAt(i: Int, j: Int, image: CarvableImage): Int {
+    override fun energyAt(i: Int, j: Int, image: CarvableImage): Long {
         if (i == 0 || i == image.height - 1 || j == 0 || j == image.width - 1) {
             return MAX_POSSIBLE_ENERGY
         }
@@ -27,7 +27,7 @@ internal class GradientEnergy: Energy() {
                 (Color.green(top) - Color.green(down)).toDouble().pow(2) +
                 (Color.blue(top) - Color.blue(down)).toDouble().pow(2)
 
-        return sqrt(dx + dy).toInt()
+        return sqrt(dx + dy).toLong()
     }
 
 }

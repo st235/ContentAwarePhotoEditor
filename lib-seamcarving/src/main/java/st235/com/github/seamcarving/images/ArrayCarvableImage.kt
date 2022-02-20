@@ -1,6 +1,6 @@
 package st235.com.github.seamcarving.images
 
-class ArrayCarvableImage(
+internal class ArrayCarvableImage(
     private val image: Array<IntArray>,
     private val maskMatrix: Array<IntArray>?
 ) : CarvableImage() {

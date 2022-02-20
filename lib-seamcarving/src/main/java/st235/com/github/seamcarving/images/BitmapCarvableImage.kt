@@ -2,7 +2,7 @@ package st235.com.github.seamcarving.images
 
 import android.graphics.Bitmap
 
-class BitmapCarvableImage(
+internal class BitmapCarvableImage(
     internal val bitmap: Bitmap,
     private val maskMatrix: Array<IntArray>?
 ): CarvableImage() {

@@ -1,20 +1,17 @@
 package st235.com.github.seamcarving.presentation.editor
 
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bumptech.glide.Glide
 import kotlin.math.min
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import st235.com.github.seamcarving.Energy
 import st235.com.github.seamcarving.SeamCarver
-import st235.com.github.seamcarving.images.BitmapCarvableImage
 import st235.com.github.seamcarving.interactors.GalleryInteractor
 import st235.com.github.seamcarving.presentation.editor.options.brushes.EditorBrush
 
@@ -33,7 +30,7 @@ class EditorViewModel(
     fun saveImage(bitmap: Bitmap, matrix: Bitmap?) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                val seamCarver = SeamCarver.create()
+                val seamCarver = SeamCarver.create(type = SeamCarver.Type.SPEED)
                 val size = min(bitmap.width, bitmap.height)
 
                 val resizedMatrix = matrix?.let { Bitmap.createScaledBitmap(matrix, bitmap.width, bitmap.height, false) }
@@ -70,7 +67,7 @@ class EditorViewModel(
                 }
 
 
-                val image = seamCarver.retarget(bitmap, finalMatrix, bitmap.width - removedCount, bitmap.height)
+                val image = seamCarver.retarget(bitmap, finalMatrix, size, size)
                 galleryInteractor.saveImage("cropper", "${System.currentTimeMillis()}_image.png", null, image)
                 Log.d("HelloWorld", "Saved")
             }

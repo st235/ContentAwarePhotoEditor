@@ -1,6 +1,7 @@
 package st235.com.github.seamcarving
 
 import android.graphics.Bitmap
+import st235.com.github.seamcarving.algorithms.FastSeamCarver
 import st235.com.github.seamcarving.algorithms.SimpleDynamicSeamCarver
 import st235.com.github.seamcarving.energies.GradientEnergy
 import st235.com.github.seamcarving.images.CarvableImage
@@ -27,7 +28,7 @@ interface SeamCarver {
         ): SeamCarver {
             return when(type) {
                 Type.FIDELITY -> SimpleDynamicSeamCarver(energy)
-                Type.SPEED -> throw IllegalArgumentException()
+                Type.SPEED -> FastSeamCarver(energy)
             }
         }
 

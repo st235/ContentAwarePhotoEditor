@@ -1,7 +1,5 @@
 package st235.com.github.seamcarving.images
 
-import android.graphics.Color
-
 abstract class CarvableImage {
 
     abstract val width: Int

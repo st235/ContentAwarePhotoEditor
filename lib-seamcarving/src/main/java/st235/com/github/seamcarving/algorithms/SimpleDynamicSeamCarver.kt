@@ -1,7 +1,6 @@
 package st235.com.github.seamcarving.algorithms
 
 import android.graphics.Bitmap
-import android.util.Log
 import st235.com.github.seamcarving.Energy
 import st235.com.github.seamcarving.SeamCarver
 import st235.com.github.seamcarving.images.BitmapCarvableImage
@@ -9,7 +8,7 @@ import st235.com.github.seamcarving.images.CarvableImage
 import st235.com.github.seamcarving.utils.CarvingUtils
 import st235.com.github.seamcarving.utils.asBitmap
 
-class SimpleDynamicSeamCarver(
+internal class SimpleDynamicSeamCarver(
     private val energy: Energy
 ): SeamCarver {
 
@@ -39,7 +38,6 @@ class SimpleDynamicSeamCarver(
         var currentImage = image
 
         while (currentImage.width != targetWidth) {
-            Log.d("HelloWorld", "width: ${currentImage.width}")
             val seam = CarvingUtils.retrieveVerticalSeam(energy, currentImage)
 
             currentImage = if (targetWidth > currentImage.width) {

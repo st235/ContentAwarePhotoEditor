@@ -14,11 +14,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.appbar.MaterialToolbar
-import kotlin.math.min
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import st235.com.github.seamcarving.R
-import st235.com.github.seamcarving.SeamCarver
-import st235.com.github.seamcarving.images.BitmapCarvableImage
 import st235.com.github.seamcarving.presentation.components.ToggleGroupLayout
 import st235.com.github.seamcarving.presentation.editor.options.brushes.EditorBrushFragment
 
