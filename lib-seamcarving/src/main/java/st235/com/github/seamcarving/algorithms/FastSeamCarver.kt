@@ -7,7 +7,7 @@ import st235.com.github.seamcarving.Energy
 import st235.com.github.seamcarving.SeamCarver
 import st235.com.github.seamcarving.images.BitmapCarvableImage
 import st235.com.github.seamcarving.images.CarvableImage
-import st235.com.github.seamcarving.utils.CarvingUtils
+import st235.com.github.seamcarving.utils.CarvingHelper
 import st235.com.github.seamcarving.utils.asBitmap
 
 internal class FastSeamCarver(
@@ -54,8 +54,8 @@ internal class FastSeamCarver(
     }
 
     private fun retargetHeight(image: CarvableImage, targetHeight: Int): CarvableImage {
-        val currentImage = CarvingUtils.transpose(image)
-        return CarvingUtils.transpose(retargetWidth(currentImage, targetHeight))
+        val currentImage = CarvingHelper.transpose(image)
+        return CarvingHelper.transpose(retargetWidth(currentImage, targetHeight))
     }
 
     private fun retargetWidth(image: CarvableImage, targetWidth: Int): CarvableImage {
@@ -67,7 +67,7 @@ internal class FastSeamCarver(
         val seamsEnergy: Array<LongArray> = Array(image.height) { LongArray(image.width) }
 
         //M
-        val optimalEnergy: Array<LongArray> = CarvingUtils.calculateEnergy(energy, image)
+        val optimalEnergy: Array<LongArray> = CarvingHelper.calculateEnergy(energy, image)
 
         val seams = Array<Seam>(image.width) { Seam(image.height) }
 
@@ -77,7 +77,7 @@ internal class FastSeamCarver(
 
         val matches = LongArray(image.width)
         for (row in 0 until image.height - 1) {
-            CarvingUtils.establishBipartiteConnections(row, seamsEnergy, optimalEnergy, matches)
+            CarvingHelper.establishBipartiteConnections(row, seamsEnergy, optimalEnergy, matches)
             extendSeams(row, image, seams, seamsEnergy, optimalEnergy, matches)
         }
 
@@ -99,9 +99,9 @@ internal class FastSeamCarver(
         }
 
         return if (targetWidth < image.width) {
-            CarvingUtils.removeSeams(image, k, mask)
+            CarvingHelper.removeSeams(image, k, mask)
         } else {
-            CarvingUtils.addSeams(image, k, mask)
+            CarvingHelper.addSeams(image, k, mask)
         }
     }
 
@@ -127,7 +127,7 @@ internal class FastSeamCarver(
         while (column >= 0) {
             val lastMatch = if (column == 0) 0 else matches[column - 1]
 
-            if (matches[column] == lastMatch + CarvingUtils.calculateWeight(row, column, column, optimumEnergy, seamsEnergy)) {
+            if (matches[column] == lastMatch + CarvingHelper.calculateWeight(row, column, column, optimumEnergy, seamsEnergy)) {
                 seams[column].add(column, energy.calculateAt(row, column, image))
                 seamsEnergy[row + 1][column] = seamsEnergy[row][column] + energy.calculateAt(row + 1, column, image)
                 column -= 1

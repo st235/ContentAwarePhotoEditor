@@ -3,27 +3,33 @@ package st235.com.github.seamcarving.di
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import st235.com.github.seamcarving.data.StatefulMediaRepository
 import st235.com.github.seamcarving.utils.media.MediaSaver
 import st235.com.github.seamcarving.utils.media.MediaScanner
 import st235.com.github.seamcarving.interactors.GalleryInteractor
+import st235.com.github.seamcarving.interactors.StatefulMediaInteractor
 import st235.com.github.seamcarving.presentation.editor.EditorViewModel
 import st235.com.github.seamcarving.presentation.gallery.GalleryViewModel
 
-val viewModelsModules = module {
+val viewModelsModule = module {
 
-    viewModel { GalleryViewModel(get()) }
+    viewModel { GalleryViewModel(get(), get()) }
 
     viewModel { EditorViewModel(get()) }
 
 }
 
-val interactorsModules = module {
+val interactorsModule = module {
 
-    single { GalleryInteractor(get(), get()) }
+    factory { GalleryInteractor(get(), get()) }
+
+    factory { StatefulMediaInteractor(get()) }
 
 }
 
-val dataModules = module {
+val dataModule = module {
+
+    single { StatefulMediaRepository(get()) }
 
     single {
         val contentResolver = androidContext().contentResolver
@@ -37,6 +43,6 @@ val dataModules = module {
 
 }
 
-val applicationModules = viewModelsModules +
-        interactorsModules +
-        dataModules
+val applicationModules = viewModelsModule +
+        interactorsModule +
+        dataModule

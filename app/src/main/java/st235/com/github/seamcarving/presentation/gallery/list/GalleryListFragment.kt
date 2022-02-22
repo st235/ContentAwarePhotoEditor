@@ -1,6 +1,7 @@
 package st235.com.github.seamcarving.presentation.gallery.list
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -9,23 +10,26 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import st235.com.github.seamcarving.R
+import st235.com.github.seamcarving.data.StatefulMediaRequest
 import st235.com.github.seamcarving.presentation.editor.EditorActivity
 import st235.com.github.seamcarving.presentation.gallery.GalleryViewModel
 
-class GalleryListFragment: Fragment() {
+
+class GalleryListFragment : Fragment() {
 
     private val galleryViewModel: GalleryViewModel by sharedViewModel()
 
     private lateinit var galleryRecyclerView: RecyclerView
     private lateinit var createNewProjectFromGalleryButton: ExtendedFloatingActionButton
+    private lateinit var createNewProjectFromCameraButton: FloatingActionButton
 
     private lateinit var layoutManager: RecyclerView.LayoutManager
     private val galleryAdapter = GalleryAdapter {
@@ -33,14 +37,21 @@ class GalleryListFragment: Fragment() {
     }
 
     private val onOpenGalleryResultLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult(),
-        ActivityResultCallback { result ->
-            val imageUri = result.data?.data
-            if (imageUri != null) {
-                startActivity(EditorActivity.launchIntent(requireContext(), imageUri))
-            }
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val imageUri = result.data?.data
+        if (imageUri != null) {
+            onFileWriteFinished(imageUri)
         }
-    )
+    }
+
+    private val onOpenCameraResultLauncher = registerForActivityResult(
+        ActivityResultContracts.TakePicture()
+    ) { wasSuccessful ->
+        if (wasSuccessful) {
+            galleryViewModel.consumePendingFile()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,6 +64,7 @@ class GalleryListFragment: Fragment() {
 
         galleryRecyclerView = view.findViewById(R.id.gallery_list_recycler_view)
         createNewProjectFromGalleryButton = view.findViewById(R.id.gallery_list_gallery_project)
+        createNewProjectFromCameraButton = view.findViewById(R.id.gallery_list_camera_project)
 
         layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         galleryRecyclerView.adapter = galleryAdapter
@@ -65,11 +77,25 @@ class GalleryListFragment: Fragment() {
             onNewProjectClick()
         }
 
-        galleryViewModel.observeImages().observe(viewLifecycleOwner) {
+        createNewProjectFromCameraButton.setOnClickListener {
+            onCameraProjectClick()
+        }
+
+        galleryViewModel.observeAlbumImages().observe(viewLifecycleOwner) {
             galleryAdapter.setItems(it)
         }
 
-        galleryViewModel.loadImages()
+        galleryViewModel.observeMediaRequests().observe(viewLifecycleOwner) { mediaRequest ->
+            when (mediaRequest) {
+                is StatefulMediaRequest.PendingFetch -> onCameraFilePrepared(mediaRequest.uri)
+                is StatefulMediaRequest.FinishedFetch -> onFileWriteFinished(mediaRequest.uri)
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        galleryViewModel.loadAlbumImages()
     }
 
     private fun onNewProjectClick() {
@@ -81,7 +107,21 @@ class GalleryListFragment: Fragment() {
         onOpenGalleryResultLauncher.launch(intent)
     }
 
-    private inner class FabCollapseScrollListener: RecyclerView.OnScrollListener() {
+    private fun onCameraProjectClick() {
+        galleryViewModel.requestEmptyFile()
+    }
+
+    private fun onCameraFilePrepared(uri: Uri) {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+        onOpenCameraResultLauncher.launch(uri)
+    }
+
+    private fun onFileWriteFinished(uri: Uri) {
+        startActivity(EditorActivity.launchIntent(requireContext(), uri))
+    }
+
+    private inner class FabCollapseScrollListener : RecyclerView.OnScrollListener() {
 
         private val handler = Handler(Looper.getMainLooper())
         private val expandCallback = Runnable {

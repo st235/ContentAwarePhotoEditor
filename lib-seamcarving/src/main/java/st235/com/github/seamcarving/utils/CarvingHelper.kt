@@ -1,6 +1,5 @@
 package st235.com.github.seamcarving.utils
 
-import android.graphics.Color
 import kotlin.math.max
 import kotlin.math.min
 import st235.com.github.seamcarving.Energy
@@ -8,15 +7,7 @@ import st235.com.github.seamcarving.images.ArrayCarvableImage
 import st235.com.github.seamcarving.images.CarvableImage
 import st235.com.github.seamcarving.images.TransposedCarvableImage
 
-internal object CarvingUtils {
-
-    /**
-     * left (j - 1) - down (j) - right (j + 1)
-     *               current (j)
-     */
-    const val MATCH_RIGHT = 1
-    const val MATCH_UP = 0
-    const val MATCH_LEFT = -1
+internal object CarvingHelper {
 
     /**
      * Transposes the original image
@@ -304,20 +295,6 @@ internal object CarvingUtils {
         }
 
         return lookup
-    }
-
-    /**
-     * Retrieves a value from an array representation of the image.
-     *
-     * Runtime complexity: O(1)
-     * Space complexity: O(1)
-     */
-    private fun getOrDefault(image: LongArray, i: Int, default: Long): Long {
-        if (i < 0 || i >= image.size) {
-            return default
-        }
-
-        return image[i]
     }
 
     /**

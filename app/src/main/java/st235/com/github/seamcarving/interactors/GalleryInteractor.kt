@@ -13,9 +13,11 @@ class GalleryInteractor(
     private val mediaSaver: MediaSaver
 ) {
 
-    suspend fun loadImages(
+    private val dispatcher = Dispatchers.IO
+
+    suspend fun loadImagesFromAlbum(
         album: String
-    ): List<ImageInfo> = withContext(Dispatchers.IO) {
+    ): List<ImageInfo> = withContext(dispatcher) {
         mediaScanner.loadFiles(album)
             .map {
                 ImageInfo(
@@ -33,7 +35,7 @@ class GalleryInteractor(
         title: String,
         description: String? = null,
         bitmap: Bitmap? = null
-    ) = withContext(Dispatchers.IO) {
+    ) = withContext(dispatcher) {
         mediaSaver.save(album, title, description, bitmap)
     }
 

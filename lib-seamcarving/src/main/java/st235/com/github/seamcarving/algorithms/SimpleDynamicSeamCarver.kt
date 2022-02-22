@@ -5,7 +5,7 @@ import st235.com.github.seamcarving.Energy
 import st235.com.github.seamcarving.SeamCarver
 import st235.com.github.seamcarving.images.BitmapCarvableImage
 import st235.com.github.seamcarving.images.CarvableImage
-import st235.com.github.seamcarving.utils.CarvingUtils
+import st235.com.github.seamcarving.utils.CarvingHelper
 import st235.com.github.seamcarving.utils.asBitmap
 
 internal class SimpleDynamicSeamCarver(
@@ -38,12 +38,12 @@ internal class SimpleDynamicSeamCarver(
         var currentImage = image
 
         while (currentImage.width != targetWidth) {
-            val seam = CarvingUtils.retrieveVerticalSeam(energy, currentImage)
+            val seam = CarvingHelper.retrieveVerticalSeam(energy, currentImage)
 
             currentImage = if (targetWidth > currentImage.width) {
-                CarvingUtils.addSeam(currentImage, seam)
+                CarvingHelper.addSeam(currentImage, seam)
             } else {
-                CarvingUtils.removeSeam(currentImage, seam)
+                CarvingHelper.removeSeam(currentImage, seam)
             }
         }
 
@@ -57,8 +57,8 @@ internal class SimpleDynamicSeamCarver(
      * Runtime complexity: O(w * h * h), ie O(w * h^2)
      */
     private fun retargetHeight(image: CarvableImage, targetHeight: Int): CarvableImage {
-        val currentImage = CarvingUtils.transpose(image)
-        return CarvingUtils.transpose(retargetWidth(currentImage, targetHeight))
+        val currentImage = CarvingHelper.transpose(image)
+        return CarvingHelper.transpose(retargetWidth(currentImage, targetHeight))
     }
 
 }
