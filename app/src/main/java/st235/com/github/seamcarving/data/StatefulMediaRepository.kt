@@ -22,6 +22,8 @@ class StatefulMediaRepository(
 
     @Synchronized
     fun fetchEmptyFile(title: String): StatefulMediaRequest {
+        removePendingIfNecessary()
+
         val uri = mediaSaver.save(EMPTY_ALBUM, title, null, null)
 
         if (uri == null) {
@@ -43,8 +45,15 @@ class StatefulMediaRepository(
         }
 
         pendingUri = null
-
         return StatefulMediaRequest.FinishedFetch(uri)
+    }
+
+    private fun removePendingIfNecessary() {
+        val uri = pendingUri
+        if (uri != null) {
+            mediaSaver.delete(uri)
+            pendingUri = null
+        }
     }
 
 }
