@@ -18,7 +18,7 @@ class GalleryInteractor(
     suspend fun loadImagesFromAlbum(
         album: String
     ): List<ImageInfo> = withContext(dispatcher) {
-        mediaScanner.loadFiles(album, MediaScanner.Page(5, 0))
+        mediaScanner.load(album, MediaScanner.Page(5, 0))
             .map {
                 ImageInfo(
                     id = it.id,
