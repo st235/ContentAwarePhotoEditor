@@ -95,7 +95,7 @@ class GalleryListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        galleryViewModel.loadAlbumImages()
+        galleryViewModel.resetAlbum()
     }
 
     private fun onNewProjectClick() {
@@ -132,6 +132,10 @@ class GalleryListFragment : Fragment() {
             if ((dy > 0 || dy < 0) && createNewProjectFromGalleryButton.isExtended) {
                 handler.removeCallbacks(expandCallback)
                 createNewProjectFromGalleryButton.shrink()
+            }
+
+            if (!recyclerView.canScrollVertically(1) && dy > 0) {
+                galleryViewModel.loadNextAlbumPage()
             }
         }
 

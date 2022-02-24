@@ -6,11 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import st235.com.github.seamcarving.interactors.GalleryInteractor
+import st235.com.github.seamcarving.interactors.AlbumsInteractor
 import st235.com.github.seamcarving.presentation.editor.options.brushes.EditorBrush
 
 class EditorViewModel(
-    private val galleryInteractor: GalleryInteractor
+    private val albumsInteractor: AlbumsInteractor
 ): ViewModel() {
 
     private val brushTypeLiveData = MutableLiveData<EditorBrush>()

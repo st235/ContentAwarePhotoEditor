@@ -1,19 +1,18 @@
 package st235.com.github.seamcarving.presentation.gallery
 
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import st235.com.github.seamcarving.data.StatefulMediaRequest
-import st235.com.github.seamcarving.interactors.GalleryInteractor
+import st235.com.github.seamcarving.interactors.AlbumsInteractor
 import st235.com.github.seamcarving.interactors.StatefulMediaInteractor
 import st235.com.github.seamcarving.interactors.models.ImageInfo
 import st235.com.github.seamcarving.utils.MutableLiveEvent
 
 class GalleryViewModel(
-    private val galleryInteractor: GalleryInteractor,
+    private val albumsInteractor: AlbumsInteractor,
     private val statefulMediaInteractor: StatefulMediaInteractor
 ): ViewModel() {
 
@@ -37,9 +36,17 @@ class GalleryViewModel(
         }
     }
 
-    fun loadAlbumImages() {
+    fun resetAlbum() {
         viewModelScope.launch {
-            val items = galleryInteractor.loadImagesFromAlbum(".*")
+            albumsInteractor.resetPages()
+            val items = albumsInteractor.loadNextPage()
+            imagesLiveData.value = items
+        }
+    }
+
+    fun loadNextAlbumPage() {
+        viewModelScope.launch {
+            val items = albumsInteractor.loadNextPage()
             imagesLiveData.value = items
         }
     }
