@@ -1,7 +1,6 @@
 package st235.com.github.seamcarving.interactors.models
 
 import android.graphics.Rect
-import android.graphics.RectF
 import st235.com.github.seamcarving.utils.compareWithTolerance
 
 class AspectRatio(
@@ -9,7 +8,7 @@ class AspectRatio(
     val height: Int
 ) {
 
-    val aspectRatio: Double
+    val rawAspectRatio: Double
     get() {
         return width.toDouble() / height
     }
@@ -40,17 +39,26 @@ class AspectRatio(
         }
     }
 
+    fun isTheSameAspectRatio(that: AspectRatio): Boolean {
+        return rawAspectRatio.compareWithTolerance(that.rawAspectRatio)
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
         other as AspectRatio
-        return aspectRatio.compareWithTolerance(other.aspectRatio)
+
+        if (width != other.width) return false
+        if (height != other.height) return false
+
+        return true
     }
 
     override fun hashCode(): Int {
-        return aspectRatio.hashCode()
+        var result = width
+        result = 31 * result + height
+        return result
     }
-
 
 }

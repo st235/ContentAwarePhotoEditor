@@ -2,12 +2,10 @@ package st235.com.github.seamcarving.presentation.editor
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -17,6 +15,7 @@ import st235.com.github.seamcarving.R
 import st235.com.github.seamcarving.presentation.components.EditorView
 import st235.com.github.seamcarving.presentation.components.GlideBlurTransformation
 import st235.com.github.seamcarving.presentation.editor.options.brushes.EditorBrush
+import st235.com.github.seamcarving.presentation.editor.options.brushes.colorRes
 import st235.com.github.seamcarving.utils.dp
 
 class EditorViewDelegate(
@@ -32,7 +31,7 @@ class EditorViewDelegate(
     }
 
     fun updateBrushType(type: EditorBrush) {
-        editorView.editBrush =  type.color
+        editorView.setEditorBrushRes(type.colorRes)
     }
 
     fun updateImage(uri: Uri) {

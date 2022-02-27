@@ -1,4 +1,8 @@
 <resources>
+    <color name="brush_keep_area">#AAA5D6A7</color>
+    <color name="brush_remove_area">#AAEF9A9A</color>
+    <color name="brush_clear_area">#00000000</color>
+
     <color name="md_theme_light_primary">#B42053</color>
     <color name="md_theme_light_onPrimary">#FFFFFF</color>
     <color name="md_theme_light_primaryContainer">#FFD9E0</color>
@@ -27,6 +31,7 @@
     <color name="md_theme_light_inversePrimary">#FFB2C2</color>
     <color name="md_theme_light_shadow">#000000</color>
     <color name="md_theme_light_primaryInverse">#FFB2C2</color>
+
     <color name="md_theme_dark_primary">#FFB2C2</color>
     <color name="md_theme_dark_onPrimary">#660027</color>
     <color name="md_theme_dark_primaryContainer">#90003B</color>

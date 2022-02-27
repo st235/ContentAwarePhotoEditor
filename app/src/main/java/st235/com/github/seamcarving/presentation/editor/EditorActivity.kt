@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -18,9 +19,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import st235.com.github.seamcarving.R
 import st235.com.github.seamcarving.presentation.components.ToggleGroupLayout
 import st235.com.github.seamcarving.presentation.editor.options.brushes.EditorBrushFragment
-import st235.com.github.seamcarving.presentation.editor.options.modes.EditorModesFragment
-import st235.com.github.seamcarving.presentation.editor.options.quality.EditorQualityFragment
-import st235.com.github.seamcarving.presentation.editor.options.sizes.EditorSizesFragment
+import st235.com.github.seamcarving.presentation.editor.options.resize.EditorResizeModesFragment
+import st235.com.github.seamcarving.presentation.editor.options.quality.EditorQualityModesFragment
+import st235.com.github.seamcarving.presentation.editor.options.dimensions.EditorDimensionsFragment
 
 class EditorActivity : AppCompatActivity() {
 
@@ -46,14 +47,7 @@ class EditorActivity : AppCompatActivity() {
         editorViewDelegate = EditorViewDelegate(rootView)
 
         editorControlPanelLayout.onSelectedListener = { view ->
-            when (view.id) {
-                R.id.editor_option_brush -> openFragment(EditorBrushFragment())
-                R.id.editor_option_sizes -> openFragment(EditorSizesFragment())
-                R.id.editor_option_modes -> openFragment(EditorModesFragment())
-                R.id.editor_option_quality -> openFragment(EditorQualityFragment())
-                R.id.editor_option_reset -> editorViewDelegate.reset()
-                R.id.editor_option_apply -> render()
-            }
+            onControlItemSelected(view)
         }
 
         editorViewModel.observeImage()
@@ -61,12 +55,14 @@ class EditorActivity : AppCompatActivity() {
                 editorViewDelegate.updateImage(image)
             }
 
-        editorViewModel.observeBrushType()
+        editorViewModel.observeSelectedBrush()
             .observe(this) { brushType ->
                 editorViewDelegate.updateBrushType(brushType)
             }
 
+        onControlItemSelected(editorControlPanelLayout.selectedView)
         editorViewModel.updateImage(extractImageUri())
+        editorViewModel.loadAspectRatios()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -78,6 +74,17 @@ class EditorActivity : AppCompatActivity() {
             else -> {
                 super.onOptionsItemSelected(item)
             }
+        }
+    }
+
+    private fun onControlItemSelected(view: View) {
+        when (view.id) {
+            R.id.editor_option_brush -> openFragment(EditorBrushFragment())
+            R.id.editor_option_sizes -> openFragment(EditorDimensionsFragment())
+            R.id.editor_option_modes -> openFragment(EditorResizeModesFragment())
+            R.id.editor_option_quality -> openFragment(EditorQualityModesFragment())
+            R.id.editor_option_reset -> editorViewDelegate.reset()
+            R.id.editor_option_apply -> render()
         }
     }
 

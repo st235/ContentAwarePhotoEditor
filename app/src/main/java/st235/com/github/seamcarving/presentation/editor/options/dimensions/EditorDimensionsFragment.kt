@@ -1,4 +1,4 @@
-package st235.com.github.seamcarving.presentation.editor.options.sizes
+package st235.com.github.seamcarving.presentation.editor.options.dimensions
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,30 +10,37 @@ import st235.com.github.seamcarving.R
 import st235.com.github.seamcarving.presentation.editor.EditorViewModel
 import st235.com.github.seamcarving.presentation.utils.findViewById
 
-class EditorSizesFragment: Fragment() {
+class EditorDimensionsFragment: Fragment() {
 
     private val editorViewModel: EditorViewModel by sharedViewModel()
 
-    private lateinit var sizesToggleGroupDelegate: SizesToggleGroupDelegate
+    private lateinit var aspectRatiosToggleGroupDelegate: AspectRatiosToggleGroupDelegate
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_editor_options_sizes, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_editor_options_dimensions, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val rootView = findViewById<ViewGroup>(R.id.root_view)
 
-        sizesToggleGroupDelegate = SizesToggleGroupDelegate(rootView)
+        aspectRatiosToggleGroupDelegate = AspectRatiosToggleGroupDelegate(rootView)
+
+        aspectRatiosToggleGroupDelegate.onRatioSelected = { aspectRatio ->
+            editorViewModel.selectAspectRatio(aspectRatio)
+        }
 
         editorViewModel.observeAspectRatios()
             .observe(viewLifecycleOwner) { aspectRatios ->
-                sizesToggleGroupDelegate.updateToggles(aspectRatios)
+                aspectRatiosToggleGroupDelegate.updateToggles(aspectRatios)
             }
 
-        editorViewModel.loadAspectRatios()
+        editorViewModel.observeSelectedAspectRatio()
+            .observe(viewLifecycleOwner) { aspectRatio ->
+                aspectRatiosToggleGroupDelegate.selectToggle(aspectRatio)
+            }
     }
 }

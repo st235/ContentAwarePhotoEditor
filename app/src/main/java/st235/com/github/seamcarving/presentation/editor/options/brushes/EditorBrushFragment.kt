@@ -30,9 +30,9 @@ class EditorBrushFragment: Fragment() {
 
         brushOptionsLayout.onSelectedListener = { view ->
             when (view.id) {
-                R.id.editor_brush_keep -> editorViewModel.updateEditorBrush(EditorBrush.KEEP)
-                R.id.editor_brush_remove -> editorViewModel.updateEditorBrush(EditorBrush.REMOVE)
-                R.id.editor_brush_erase -> editorViewModel.updateEditorBrush(EditorBrush.CLEAR)
+                R.id.editor_brush_keep -> editorViewModel.selectBrush(EditorBrush.KEEP)
+                R.id.editor_brush_remove -> editorViewModel.selectBrush(EditorBrush.REMOVE)
+                R.id.editor_brush_erase -> editorViewModel.selectBrush(EditorBrush.CLEAR)
             }
         }
     }

@@ -27,7 +27,7 @@
             style="@style/EditorControlPanelView.Item"
             app:toggleable="true"
             app:ecpv_icon="@drawable/ic_twotone_straighten"
-            app:ecpv_text="@string/fragment_editor_options_home_menu_sizes" />
+            app:ecpv_text="@string/fragment_editor_options_home_menu_target_aspect_ratio" />
 
         <st235.com.github.seamcarving.presentation.editor.options.EditorControlPanelView
             android:id="@+id/editor_option_modes"
@@ -36,7 +36,7 @@
             style="@style/EditorControlPanelView.Item"
             app:toggleable="true"
             app:ecpv_icon="@drawable/ic_twotone_aspect_ratio"
-            app:ecpv_text="@string/fragment_editor_options_home_menu_mode" />
+            app:ecpv_text="@string/fragment_editor_options_home_menu_resize_modes" />
 
         <st235.com.github.seamcarving.presentation.editor.options.EditorControlPanelView
             android:id="@+id/editor_option_quality"
@@ -45,7 +45,7 @@
             style="@style/EditorControlPanelView.Item"
             app:toggleable="true"
             app:ecpv_icon="@drawable/ic_twotone_auto_awesome"
-            app:ecpv_text="@string/fragment_editor_options_home_menu_quality" />
+            app:ecpv_text="@string/fragment_editor_options_home_menu_quality_modes" />
 
         <st235.com.github.seamcarving.presentation.editor.options.EditorControlPanelView
             android:id="@+id/editor_option_reset"

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:scrollbars="none"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <st235.com.github.seamcarving.presentation.components.ToggleGroupLayout
-        android:id="@+id/brush_options_layout"
+        android:id="@+id/quality_modes_options_layout"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center">
+        android:layout_height="match_parent">
 
         <st235.com.github.seamcarving.presentation.editor.options.EditorControlPanelView
             android:id="@+id/editor_quality_fidelity"
@@ -18,7 +18,7 @@
             style="@style/EditorControlPanelView.SubItem"
             app:toggleable="true"
             app:ecpv_icon="@drawable/ic_twotone_auto_fix_high"
-            app:ecpv_text="@string/fragment_editor_quality_fidelity" />
+            app:ecpv_text="@string/fragment_editor_quality_modes_fidelity" />
 
         <st235.com.github.seamcarving.presentation.editor.options.EditorControlPanelView
             android:id="@+id/editor_quality_speed"
@@ -27,7 +27,7 @@
             style="@style/EditorControlPanelView.SubItem"
             app:toggleable="true"
             app:ecpv_icon="@drawable/ic_twotone_speed"
-            app:ecpv_text="@string/fragment_editor_quality_speed" />
+            app:ecpv_text="@string/fragment_editor_quality_modes_speed" />
 
     </st235.com.github.seamcarving.presentation.components.ToggleGroupLayout>
 

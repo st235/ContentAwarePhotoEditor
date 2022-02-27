@@ -15,7 +15,9 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
 import androidx.annotation.Px
+import androidx.core.content.ContextCompat
 
 class EditorView: View {
 
@@ -84,6 +86,10 @@ class EditorView: View {
     init {
         isFocusable = true
         isClickable = true
+    }
+
+    fun setEditorBrushRes(@ColorRes colorRes: Int) {
+        editBrush = ContextCompat.getColor(context, colorRes)
     }
 
     fun getAreaSnapshot(): Bitmap? {

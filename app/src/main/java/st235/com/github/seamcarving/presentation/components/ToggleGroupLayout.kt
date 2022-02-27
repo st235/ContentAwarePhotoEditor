@@ -1,34 +1,28 @@
 package st235.com.github.seamcarving.presentation.components
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
-import android.widget.ScrollView
-import kotlin.math.max
-import kotlin.math.min
-import st235.com.github.seamcarving.R
+import androidx.annotation.IdRes
 
-class ToggleGroupLayout: LinearLayout {
+class ToggleGroupLayout : LinearLayout {
 
     interface Toggleable {
         val isToggleable: Boolean
     }
 
-    private var selectedItem: Int = -1
+    @IdRes
+    private var selectedViewId: Int = -1
+
+    val selectedView: View
+    get() {
+        return findViewById(selectedViewId)
+    }
 
     var onSelectedListener: ((view: View) -> Unit)? = null
-    set(newValue) {
-        field = newValue
-
-        if (selectedItem in 0 until childCount) {
-            onSelectedListener?.invoke(getChildAt(selectedItem))
-        }
-    }
 
     constructor(context: Context?) : super(context)
 
@@ -50,7 +44,7 @@ class ToggleGroupLayout: LinearLayout {
 
         for (i in 0 until childCount) {
             val view = getChildAt(i)
-            prepareView(view, i)
+            prepareView(view)
         }
 
         selectView(findFirstToggleable())
@@ -58,41 +52,46 @@ class ToggleGroupLayout: LinearLayout {
 
     override fun addView(child: View?) {
         super.addView(child)
-        prepareView(child, childCount - 1)
+        prepareView(child)
     }
 
     override fun addView(child: View?, index: Int) {
         super.addView(child, index)
-        prepareView(child, childCount - 1)
+        prepareView(child)
     }
 
     override fun addView(child: View?, width: Int, height: Int) {
         super.addView(child, width, height)
-        prepareView(child, childCount - 1)
+        prepareView(child)
     }
 
     override fun addView(child: View?, params: ViewGroup.LayoutParams?) {
         super.addView(child, params)
-        prepareView(child, childCount - 1)
+        prepareView(child)
     }
 
     override fun addView(child: View?, index: Int, params: ViewGroup.LayoutParams?) {
         super.addView(child, index, params)
-        prepareView(child, childCount - 1)
+        prepareView(child)
     }
 
-    private fun prepareView(view: View?, index: Int) {
+    private fun prepareView(view: View?) {
         view?.setOnClickListener {
-            selectView(index)
+            selectView(view.id)
         }
     }
 
-    private fun selectView(newIndex: Int) {
-        if (newIndex < 0 || newIndex >= childCount) {
+    fun selectView(@IdRes viewId: Int) {
+        if (selectedViewId == viewId) {
             return
         }
 
-        val viewCandidate = getChildAt(newIndex)
+        val viewCandidate = findViewById<View>(viewId)
+
+        if (viewCandidate == null) {
+            return
+        }
+
         val isToggleable = (viewCandidate as? Toggleable)?.isToggleable ?: false
 
         if (!isToggleable) {
@@ -100,12 +99,12 @@ class ToggleGroupLayout: LinearLayout {
             return
         }
 
-        selectedItem = newIndex
+        selectedViewId = viewId
 
         for (i in 0 until childCount) {
             val view = getChildAt(i)
 
-            val isSelected = i == selectedItem
+            val isSelected = view.id == selectedViewId
             view.isSelected = isSelected
         }
 
@@ -117,7 +116,7 @@ class ToggleGroupLayout: LinearLayout {
             val view = getChildAt(i)
 
             if ((view as? Toggleable)?.isToggleable == true) {
-                return i
+                return view.id
             }
         }
 
