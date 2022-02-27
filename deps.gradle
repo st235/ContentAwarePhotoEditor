@@ -11,6 +11,7 @@ ext.versions = [
         googleServices       : '18.0.0',
         koin                 : '3.1.2',
         lifecycle            : '2.1.0',
+        gson                 : '2.9.0',
 
         retrofit             : '2.9.0',
         picasso              : '2.71828',
@@ -32,6 +33,7 @@ ext.libs = [
         koinAndroid      : "io.insert-koin:koin-android:$versions.koin",
         viewModel        : "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle",
         liveData         : "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle",
+        gson             : "com.google.code.gson:gson:$versions.gson",
 
         retrofit         : "com.squareup.retrofit2:retrofit:$versions.retrofit",
         retrofitGson     : "com.squareup.retrofit2:converter-gson:$versions.retrofit",

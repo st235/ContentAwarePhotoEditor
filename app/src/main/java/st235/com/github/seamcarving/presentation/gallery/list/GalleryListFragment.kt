@@ -91,11 +91,13 @@ class GalleryListFragment : Fragment() {
                 is StatefulMediaRequest.FinishedFetch -> onFileWriteFinished(mediaRequest.uri)
             }
         }
+
+        galleryViewModel.loadNextAlbumPage()
     }
 
     override fun onResume() {
         super.onResume()
-        galleryViewModel.resetAlbum()
+        galleryViewModel.obtainCurrentAlbumPage()
     }
 
     private fun onNewProjectClick() {

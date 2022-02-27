@@ -18,6 +18,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import st235.com.github.seamcarving.R
 import st235.com.github.seamcarving.presentation.components.ToggleGroupLayout
 import st235.com.github.seamcarving.presentation.editor.options.brushes.EditorBrushFragment
+import st235.com.github.seamcarving.presentation.editor.options.modes.EditorModesFragment
+import st235.com.github.seamcarving.presentation.editor.options.quality.EditorQualityFragment
+import st235.com.github.seamcarving.presentation.editor.options.sizes.EditorSizesFragment
 
 class EditorActivity : AppCompatActivity() {
 
@@ -42,21 +45,28 @@ class EditorActivity : AppCompatActivity() {
 
         editorViewDelegate = EditorViewDelegate(rootView)
 
-        editorViewDelegate.updateImage(extractImageUri())
-
         editorControlPanelLayout.onSelectedListener = { view ->
             when (view.id) {
                 R.id.editor_option_brush -> openFragment(EditorBrushFragment())
+                R.id.editor_option_sizes -> openFragment(EditorSizesFragment())
+                R.id.editor_option_modes -> openFragment(EditorModesFragment())
+                R.id.editor_option_quality -> openFragment(EditorQualityFragment())
                 R.id.editor_option_reset -> editorViewDelegate.reset()
                 R.id.editor_option_apply -> render()
-                else -> null
             }
         }
+
+        editorViewModel.observeImage()
+            .observe(this) { image ->
+                editorViewDelegate.updateImage(image)
+            }
 
         editorViewModel.observeBrushType()
             .observe(this) { brushType ->
                 editorViewDelegate.updateBrushType(brushType)
             }
+
+        editorViewModel.updateImage(extractImageUri())
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

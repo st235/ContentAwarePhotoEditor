@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -20,7 +21,10 @@ class EditorControlPanelView @JvmOverloads constructor(
     private val textView: AppCompatTextView
 
     override var isToggleable: Boolean = false
-    private set
+    set(newValue) {
+        field = newValue
+        invalidate()
+    }
 
     init {
         orientation = VERTICAL
@@ -58,8 +62,11 @@ class EditorControlPanelView @JvmOverloads constructor(
         textView.text = text
     }
 
-    fun setIcon(image: Drawable) {
+    fun setIcon(image: Drawable, scaleType: ImageView.ScaleType? = null) {
         iconView.setImageDrawable(image)
+        scaleType?.let {
+            iconView.scaleType = it
+        }
     }
 
     fun setIconBackground(image: Drawable) {

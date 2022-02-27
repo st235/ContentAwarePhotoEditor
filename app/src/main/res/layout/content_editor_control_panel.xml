@@ -39,6 +39,15 @@
             app:ecpv_text="@string/fragment_editor_options_home_menu_mode" />
 
         <st235.com.github.seamcarving.presentation.editor.options.EditorControlPanelView
+            android:id="@+id/editor_option_quality"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            style="@style/EditorControlPanelView.Item"
+            app:toggleable="true"
+            app:ecpv_icon="@drawable/ic_twotone_auto_awesome"
+            app:ecpv_text="@string/fragment_editor_options_home_menu_quality" />
+
+        <st235.com.github.seamcarving.presentation.editor.options.EditorControlPanelView
             android:id="@+id/editor_option_reset"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

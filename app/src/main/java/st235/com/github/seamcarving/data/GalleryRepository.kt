@@ -1,10 +1,13 @@
 package st235.com.github.seamcarving.data
 
+import android.graphics.Bitmap
 import st235.com.github.seamcarving.utils.media.MediaInfo
+import st235.com.github.seamcarving.utils.media.MediaSaver
 import st235.com.github.seamcarving.utils.media.MediaScanner
 
-class AlbumRepository(
-    private val mediaScanner: MediaScanner
+class GalleryRepository(
+    private val mediaScanner: MediaScanner,
+    private val mediaSaver: MediaSaver
 ) {
 
     private companion object {
@@ -15,19 +18,28 @@ class AlbumRepository(
     @Volatile
     private var page: Int = 0
 
+    @get:Synchronized
+    val currentImages: List<MediaInfo>
+    get() {
+        val imagesCopy = mutableListOf<MediaInfo>()
+        imagesCopy.addAll(images)
+        return imagesCopy
+    }
+
     private val images = mutableListOf<MediaInfo>()
+
+    @Synchronized
+    fun save(title: String, origin: Bitmap) {
+        mediaSaver.save(ALBUM_TITLE, title, null, origin)
+        reset()
+    }
 
     @Synchronized
     fun loadNextPage(): List<MediaInfo> {
         val nextPage = mediaScanner.load(ALBUM_TITLE, MediaScanner.Page(PAGE_LIMIT, page * PAGE_LIMIT))
-
         page += 1
-
         images.addAll(nextPage)
-
-        val imagesCopy = mutableListOf<MediaInfo>()
-        imagesCopy.addAll(images)
-        return imagesCopy
+        return currentImages
     }
 
     @Synchronized

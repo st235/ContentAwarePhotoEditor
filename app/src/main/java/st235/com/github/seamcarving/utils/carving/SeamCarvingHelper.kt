@@ -1,7 +1,6 @@
-package st235.com.github.seamcarving.utils
+package st235.com.github.seamcarving.utils.carving
 
 import android.graphics.Bitmap
-import st235.com.github.seamcarving.utils.SeamCarvingHelper.filterColors
 
 object  SeamCarvingHelper {
 

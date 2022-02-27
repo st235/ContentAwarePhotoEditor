@@ -16,6 +16,7 @@
     <string name="fragment_editor_options_home_menu_brush">Brush</string>
     <string name="fragment_editor_options_home_menu_sizes">Sizes</string>
     <string name="fragment_editor_options_home_menu_mode">Mode</string>
+    <string name="fragment_editor_options_home_menu_quality">Quality</string>
     <string name="fragment_editor_options_home_menu_reset">Reset</string>
     <string name="fragment_editor_options_home_menu_accept">Apply</string>
 
@@ -23,4 +24,12 @@
     <string name="fragment_editor_brush_keep">Keep</string>
     <string name="fragment_editor_brush_remove">Remove</string>
     <string name="fragment_editor_brush_erase">Erase</string>
+
+    <!-- Fragment Editor Modes -->
+    <string name="fragment_editor_mode_increase">Increase</string>
+    <string name="fragment_editor_mode_decrease">Decrease</string>
+
+    <!-- Fragment Editor Quality -->
+    <string name="fragment_editor_quality_fidelity">Fidelity</string>
+    <string name="fragment_editor_quality_speed">Speed</string>
 </resources>

@@ -36,10 +36,9 @@ class GalleryViewModel(
         }
     }
 
-    fun resetAlbum() {
+    fun obtainCurrentAlbumPage() {
         viewModelScope.launch {
-            albumsInteractor.resetPages()
-            val items = albumsInteractor.loadNextPage()
+            val items = albumsInteractor.loadCurrentPage()
             imagesLiveData.value = items
         }
     }
