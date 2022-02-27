@@ -45,6 +45,5 @@ dependencies {
     implementation libs.koinAndroid
     implementation libs.viewModel
     implementation libs.liveData
-    implementation libs.picasso
     implementation libs.glide
 }

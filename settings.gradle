@@ -9,3 +9,6 @@ dependencyResolutionManagement {
 rootProject.name = "SeamCarving"
 include ':app'
 include ':lib-seamcarving'
+include ':lib-seamcarving-picasso'
+include ':lib-seamcarving-glide'
+include ':sampleapp'
