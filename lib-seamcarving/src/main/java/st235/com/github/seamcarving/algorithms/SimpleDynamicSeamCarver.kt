@@ -6,7 +6,7 @@ import st235.com.github.seamcarving.SeamCarver
 import st235.com.github.seamcarving.images.BitmapCarvableImage
 import st235.com.github.seamcarving.images.CarvableImage
 import st235.com.github.seamcarving.utils.CarvingHelper
-import st235.com.github.seamcarving.utils.asBitmap
+import st235.com.github.seamcarving.utils.asCarvingResult
 
 internal class SimpleDynamicSeamCarver(
     private val energy: Energy
@@ -23,9 +23,9 @@ internal class SimpleDynamicSeamCarver(
         mask: Array<IntArray>?,
         targetWidth: Int,
         targetHeight: Int
-    ): Bitmap {
+    ): SeamCarver.CarvingResult {
         val carvableImage = BitmapCarvableImage(image, mask)
-        return retargetHeight(retargetWidth(carvableImage, targetWidth), targetHeight).asBitmap()
+        return retargetHeight(retargetWidth(carvableImage, targetWidth), targetHeight).asCarvingResult()
     }
 
     /**

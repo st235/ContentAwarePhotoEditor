@@ -92,11 +92,11 @@ class EditorView: View {
         editBrush = ContextCompat.getColor(context, colorRes)
     }
 
-    fun getAreaSnapshot(): Bitmap? {
+    fun getAreaSnapshot(): Bitmap {
         val area = editableArea
 
         if (area == null) {
-            return null
+            throw IllegalStateException("Editable area is null")
         }
 
         return Bitmap.createBitmap(area)

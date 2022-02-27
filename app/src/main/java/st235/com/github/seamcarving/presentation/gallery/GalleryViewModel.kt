@@ -6,13 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import st235.com.github.seamcarving.data.StatefulMediaRequest
-import st235.com.github.seamcarving.interactors.AlbumsInteractor
+import st235.com.github.seamcarving.interactors.GalleryInteractor
 import st235.com.github.seamcarving.interactors.StatefulMediaInteractor
 import st235.com.github.seamcarving.interactors.models.ImageInfo
 import st235.com.github.seamcarving.utils.MutableLiveEvent
 
 class GalleryViewModel(
-    private val albumsInteractor: AlbumsInteractor,
+    private val galleryInteractor: GalleryInteractor,
     private val statefulMediaInteractor: StatefulMediaInteractor
 ): ViewModel() {
 
@@ -38,14 +38,14 @@ class GalleryViewModel(
 
     fun obtainCurrentAlbumPage() {
         viewModelScope.launch {
-            val items = albumsInteractor.loadCurrentPage()
+            val items = galleryInteractor.loadCurrentPage()
             imagesLiveData.value = items
         }
     }
 
     fun loadNextAlbumPage() {
         viewModelScope.launch {
-            val items = albumsInteractor.loadNextPage()
+            val items = galleryInteractor.loadNextPage()
             imagesLiveData.value = items
         }
     }

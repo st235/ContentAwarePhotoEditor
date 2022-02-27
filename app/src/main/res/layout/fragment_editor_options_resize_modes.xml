@@ -12,22 +12,22 @@
         android:layout_height="match_parent">
 
         <st235.com.github.seamcarving.presentation.editor.options.EditorControlPanelView
-            android:id="@+id/editor_modes_increase"
+            android:id="@+id/editor_resize_modes_keep"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             style="@style/EditorControlPanelView.SubItem"
             app:toggleable="true"
             app:ecpv_icon="@drawable/ic_twotone_zoom_out_map"
-            app:ecpv_text="@string/fragment_editor_resize_mode_increase" />
+            app:ecpv_text="@string/fragment_editor_resize_mode_keep" />
 
         <st235.com.github.seamcarving.presentation.editor.options.EditorControlPanelView
-            android:id="@+id/editor_modes_decrease"
+            android:id="@+id/editor_resize_modes_retarget"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             style="@style/EditorControlPanelView.SubItem"
             app:toggleable="true"
             app:ecpv_icon="@drawable/ic_twotone_zoom_in_map"
-            app:ecpv_text="@string/fragment_editor_resize_mode_decrease" />
+            app:ecpv_text="@string/fragment_editor_resize_mode_retarget" />
 
     </st235.com.github.seamcarving.presentation.components.ToggleGroupLayout>
 

@@ -8,6 +8,8 @@ abstract class CarvableImage {
 
     abstract val isMasked: Boolean
 
+    internal abstract val maskMatrix: Array<IntArray>?
+
     abstract fun getMaskPixel(i: Int, j: Int): Int?
 
     abstract fun getPixelAt(i: Int, j: Int): Int

@@ -9,25 +9,29 @@ import st235.com.github.seamcarving.data.GalleryRepository
 import st235.com.github.seamcarving.data.StatefulMediaRepository
 import st235.com.github.seamcarving.utils.media.MediaSaver
 import st235.com.github.seamcarving.utils.media.MediaScanner
-import st235.com.github.seamcarving.interactors.AlbumsInteractor
+import st235.com.github.seamcarving.interactors.GalleryInteractor
 import st235.com.github.seamcarving.interactors.AspectRatiosInteractor
+import st235.com.github.seamcarving.interactors.CarvingInteractor
 import st235.com.github.seamcarving.interactors.ImagesInteractor
 import st235.com.github.seamcarving.interactors.StatefulMediaInteractor
 import st235.com.github.seamcarving.presentation.editor.EditorViewModel
 import st235.com.github.seamcarving.presentation.gallery.GalleryViewModel
 import st235.com.github.seamcarving.utils.BitmapHelper
+import st235.com.github.seamcarving.utils.carving.SeamCarvingProcessor
 
 val viewModelsModule = module {
 
     viewModel { GalleryViewModel(get(), get()) }
 
-    viewModel { EditorViewModel(get(), get(), get()) }
+    viewModel { EditorViewModel(get(), get(), get(), get()) }
 
 }
 
 val interactorsModule = module {
 
-    factory { AlbumsInteractor(get()) }
+    factory { CarvingInteractor(get()) }
+
+    factory { GalleryInteractor(get()) }
 
     factory { StatefulMediaInteractor(get()) }
 
@@ -58,6 +62,8 @@ val dataModule = module {
 }
 
 val utilsModule = module {
+
+    single { SeamCarvingProcessor(androidContext()) }
 
     single { GsonBuilder().excludeFieldsWithoutExposeAnnotation().create() }
 

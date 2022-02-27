@@ -13,12 +13,39 @@ interface SeamCarver {
         SPEED
     }
 
+    data class CarvingResult(
+        val bitmap: Bitmap,
+        val mask: Array<IntArray>?
+    ) {
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as CarvingResult
+
+            if (bitmap != other.bitmap) return false
+            if (mask != null) {
+                if (other.mask == null) return false
+                if (!mask.contentDeepEquals(other.mask)) return false
+            } else if (other.mask != null) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            var result = bitmap.hashCode()
+            result = 31 * result + (mask?.contentDeepHashCode() ?: 0)
+            return result
+        }
+    }
+
     fun retarget(
         image: Bitmap,
         mask: Array<IntArray>?,
         targetWidth: Int,
         targetHeight: Int
-    ): Bitmap
+    ): CarvingResult
 
     companion object {
 

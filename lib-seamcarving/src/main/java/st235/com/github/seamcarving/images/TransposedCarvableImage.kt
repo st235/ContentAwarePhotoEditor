@@ -10,6 +10,8 @@ internal class TransposedCarvableImage(
 
     override val isMasked: Boolean = originalImage.isMasked
 
+    override val maskMatrix: Array<IntArray>? = null
+
     override fun getMaskPixel(i: Int, j: Int): Int? {
         return originalImage.getMaskPixel(j, i)
     }

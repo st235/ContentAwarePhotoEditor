@@ -33,7 +33,7 @@ class EditorQualityModesFragment: Fragment() {
             .observe(viewLifecycleOwner) { mode ->
                 when (mode) {
                     CarvingQualityMode.SPEED -> qualityModesToggleGroupLayout.selectView(R.id.editor_quality_speed)
-                    CarvingQualityMode.FIDELITY -> qualityModesToggleGroupLayout.selectView(R.id.editor_option_quality)
+                    CarvingQualityMode.FIDELITY -> qualityModesToggleGroupLayout.selectView(R.id.editor_option_quality_modes)
                 }
             }
 

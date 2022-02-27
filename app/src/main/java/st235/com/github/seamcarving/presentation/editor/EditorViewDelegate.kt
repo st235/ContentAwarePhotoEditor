@@ -63,7 +63,7 @@ class EditorViewDelegate(
             })
     }
 
-    fun getMatrix(): Bitmap? {
+    fun getMatrix(): Bitmap {
         return editorView.getAreaSnapshot()
     }
 

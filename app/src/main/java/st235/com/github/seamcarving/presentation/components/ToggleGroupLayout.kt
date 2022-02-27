@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.annotation.IdRes
+import androidx.core.view.isVisible
 
 class ToggleGroupLayout : LinearLayout {
 
@@ -37,6 +38,16 @@ class ToggleGroupLayout : LinearLayout {
     init {
         orientation = HORIZONTAL
         gravity = Gravity.CENTER_VERTICAL
+    }
+
+    fun showToggle(@IdRes viewId: Int) {
+        val view = findViewById<View>(viewId)
+        view?.visibility = View.VISIBLE
+    }
+
+    fun hideToggle(@IdRes viewId: Int) {
+        val view = findViewById<View>(viewId)
+        view?.visibility = View.GONE
     }
 
     override fun onFinishInflate() {

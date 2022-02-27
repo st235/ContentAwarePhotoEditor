@@ -26,9 +26,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:maxWidth="84dp"
+            android:gravity="center"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:fontFamily="sans-serif-medium"
             android:textColor="?attr/colorOnPrimaryContainer"
             android:textSize="16sp"
+            tools:width="84dp"
             tools:text="Brush" />
 
 </merge>

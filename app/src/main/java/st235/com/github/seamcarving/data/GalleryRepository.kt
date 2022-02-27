@@ -1,6 +1,7 @@
 package st235.com.github.seamcarving.data
 
 import android.graphics.Bitmap
+import android.net.Uri
 import st235.com.github.seamcarving.utils.media.MediaInfo
 import st235.com.github.seamcarving.utils.media.MediaSaver
 import st235.com.github.seamcarving.utils.media.MediaScanner
@@ -29,9 +30,11 @@ class GalleryRepository(
     private val images = mutableListOf<MediaInfo>()
 
     @Synchronized
-    fun save(title: String, origin: Bitmap) {
-        mediaSaver.save(ALBUM_TITLE, title, null, origin)
+    fun save(title: String, origin: Bitmap): Uri? {
+        val uri = mediaSaver.save(ALBUM_TITLE, title, null, origin)
         reset()
+        loadNextPage()
+        return uri
     }
 
     @Synchronized

@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 
 internal class BitmapCarvableImage(
     internal val bitmap: Bitmap,
-    private val maskMatrix: Array<IntArray>?
+    override val maskMatrix: Array<IntArray>?
 ): CarvableImage() {
 
     override val width: Int

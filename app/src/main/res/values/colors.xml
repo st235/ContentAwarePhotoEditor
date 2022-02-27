@@ -1,6 +1,6 @@
 <resources>
-    <color name="brush_keep_area">#AAA5D6A7</color>
-    <color name="brush_remove_area">#AAEF9A9A</color>
+    <color name="brush_keep_area">#CCA5D6A7</color>
+    <color name="brush_remove_area">#CCEF9A9A</color>
     <color name="brush_clear_area">#00000000</color>
 
     <color name="md_theme_light_primary">#B42053</color>

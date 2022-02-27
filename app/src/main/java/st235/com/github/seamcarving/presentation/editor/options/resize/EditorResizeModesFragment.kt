@@ -32,15 +32,15 @@ class EditorResizeModesFragment: Fragment() {
         editorViewModel.observeSelectedResizeMode()
             .observe(viewLifecycleOwner) { mode ->
                 when (mode) {
-                    CarvingResizeMode.INCREASE -> resizeModesToggleGroupLayout.selectView(R.id.editor_modes_increase)
-                    CarvingResizeMode.DECREASE -> resizeModesToggleGroupLayout.selectView(R.id.editor_modes_decrease)
+                    CarvingResizeMode.KEEP -> resizeModesToggleGroupLayout.selectView(R.id.editor_resize_modes_keep)
+                    CarvingResizeMode.RETARGET -> resizeModesToggleGroupLayout.selectView(R.id.editor_resize_modes_retarget)
                 }
             }
 
         resizeModesToggleGroupLayout.onSelectedListener = { view ->
             val mode = when (view.id) {
-                R.id.editor_modes_increase -> CarvingResizeMode.INCREASE
-                R.id.editor_modes_decrease -> CarvingResizeMode.DECREASE
+                R.id.editor_resize_modes_keep -> CarvingResizeMode.KEEP
+                R.id.editor_resize_modes_retarget -> CarvingResizeMode.RETARGET
                 else -> throw IllegalStateException("Unknown id $id")
             }
 

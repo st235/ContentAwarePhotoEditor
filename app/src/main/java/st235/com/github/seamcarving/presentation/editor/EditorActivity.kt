@@ -2,8 +2,6 @@ package st235.com.github.seamcarving.presentation.editor
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
@@ -11,9 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.appbar.MaterialToolbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import st235.com.github.seamcarving.R
@@ -60,6 +55,22 @@ class EditorActivity : AppCompatActivity() {
                 editorViewDelegate.updateBrushType(brushType)
             }
 
+        editorViewModel.observeSelectedAspectRatio()
+            .observe(this) { aspectRatio ->
+                if (aspectRatio == null) {
+                    editorControlPanelLayout.hideToggle(R.id.editor_option_dimensions)
+                } else {
+                    editorControlPanelLayout.showToggle(R.id.editor_option_dimensions)
+                }
+            }
+
+        editorViewModel.observeImageStatus()
+            .observe(this) { status ->
+                when (status) {
+                    ImageStatus.FINISHED -> finish()
+                }
+            }
+
         onControlItemSelected(editorControlPanelLayout.selectedView)
         editorViewModel.updateImage(extractImageUri())
         editorViewModel.loadAspectRatios()
@@ -80,28 +91,16 @@ class EditorActivity : AppCompatActivity() {
     private fun onControlItemSelected(view: View) {
         when (view.id) {
             R.id.editor_option_brush -> openFragment(EditorBrushFragment())
-            R.id.editor_option_sizes -> openFragment(EditorDimensionsFragment())
-            R.id.editor_option_modes -> openFragment(EditorResizeModesFragment())
-            R.id.editor_option_quality -> openFragment(EditorQualityModesFragment())
+            R.id.editor_option_dimensions -> openFragment(EditorDimensionsFragment())
+            R.id.editor_option_resize_modes -> openFragment(EditorResizeModesFragment())
+            R.id.editor_option_quality_modes -> openFragment(EditorQualityModesFragment())
             R.id.editor_option_reset -> editorViewDelegate.reset()
             R.id.editor_option_apply -> render()
         }
     }
 
     private fun render() {
-        val uri = extractImageUri()
-
-        Glide.with(this)
-            .asBitmap()
-            .load(uri)
-            .into(object : CustomTarget<Bitmap>(540, 540) {
-                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                    editorViewModel.saveImage(resource, editorViewDelegate.getMatrix())
-                }
-
-                override fun onLoadCleared(placeholder: Drawable?) {
-                }
-            })
+        editorViewModel.saveImage(editorViewDelegate.getMatrix())
     }
 
     private fun openFragment(fragment: Fragment) {

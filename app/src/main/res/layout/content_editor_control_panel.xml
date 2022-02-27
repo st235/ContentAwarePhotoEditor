@@ -9,6 +9,7 @@
         android:id="@+id/editor_control_panel_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         android:layout_gravity="center_vertical">
 
         <st235.com.github.seamcarving.presentation.editor.options.EditorControlPanelView
@@ -21,16 +22,7 @@
             app:ecpv_text="@string/fragment_editor_options_home_menu_brush" />
 
         <st235.com.github.seamcarving.presentation.editor.options.EditorControlPanelView
-            android:id="@+id/editor_option_sizes"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            style="@style/EditorControlPanelView.Item"
-            app:toggleable="true"
-            app:ecpv_icon="@drawable/ic_twotone_straighten"
-            app:ecpv_text="@string/fragment_editor_options_home_menu_target_aspect_ratio" />
-
-        <st235.com.github.seamcarving.presentation.editor.options.EditorControlPanelView
-            android:id="@+id/editor_option_modes"
+            android:id="@+id/editor_option_resize_modes"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             style="@style/EditorControlPanelView.Item"
@@ -39,7 +31,16 @@
             app:ecpv_text="@string/fragment_editor_options_home_menu_resize_modes" />
 
         <st235.com.github.seamcarving.presentation.editor.options.EditorControlPanelView
-            android:id="@+id/editor_option_quality"
+            android:id="@+id/editor_option_dimensions"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            style="@style/EditorControlPanelView.Item"
+            app:toggleable="true"
+            app:ecpv_icon="@drawable/ic_twotone_straighten"
+            app:ecpv_text="@string/fragment_editor_options_home_menu_target_aspect_ratio" />
+
+        <st235.com.github.seamcarving.presentation.editor.options.EditorControlPanelView
+            android:id="@+id/editor_option_quality_modes"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             style="@style/EditorControlPanelView.Item"

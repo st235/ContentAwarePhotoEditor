@@ -1,29 +1,38 @@
 package st235.com.github.seamcarving.utils.carving
 
 import android.graphics.Bitmap
+import androidx.annotation.ColorInt
+import st235.com.github.seamcarving.Energy
+import st235.com.github.seamcarving.utils.distance
 
 object  SeamCarvingHelper {
 
-    fun Bitmap?.filterColors(
+    fun Bitmap.filterColors(
         targetWidth: Int,
         targetHeight: Int,
         colorMapping: Map<Int, Int>
-    ): Array<IntArray>? {
-        if (this == null) {
-            return null
-        }
-
+    ): Array<IntArray> {
         val resizedMatrix = Bitmap.createScaledBitmap(this, targetWidth, targetHeight, false)
 
         val finalMatrix = Array(targetHeight) { IntArray(targetWidth) }
 
         for (i in 0 until this.height) {
             for (j in 0 until this.width) {
-                finalMatrix[i][j] = colorMapping.getValue(resizedMatrix.getPixel(j, i))
+                finalMatrix[i][j] = findValue(resizedMatrix.getPixel(j, i), colorMapping)
             }
         }
 
         return finalMatrix
+    }
+
+    private fun findValue(@ColorInt color: Int, colorMapping: Map<Int, Int>): Int {
+        for (that in colorMapping.keys) {
+            if (color.distance(that) <= 20) {
+                return colorMapping.getValue(that)
+            }
+        }
+
+        return Energy.MASK_NO_VALUE
     }
 
     fun Array<IntArray>.countRemovedAreas(removeValue: Int): IntArray {
@@ -42,7 +51,7 @@ object  SeamCarvingHelper {
             }
         }
 
-        return intArrayOf(verticalRemove.count(), horizontalRemove.count())
+        return intArrayOf(verticalRemove.count { it }, horizontalRemove.count {it })
     }
 
 }

@@ -40,7 +40,7 @@ class EditorDimensionsFragment: Fragment() {
 
         editorViewModel.observeSelectedAspectRatio()
             .observe(viewLifecycleOwner) { aspectRatio ->
-                aspectRatiosToggleGroupDelegate.selectToggle(aspectRatio)
+                aspectRatio?.let { aspectRatiosToggleGroupDelegate.selectToggle(aspectRatio) }
             }
     }
 }

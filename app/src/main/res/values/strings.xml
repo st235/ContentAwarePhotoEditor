@@ -26,8 +26,8 @@
     <string name="fragment_editor_brush_erase">Erase</string>
 
     <!-- Fragment Editor Resize Modes -->
-    <string name="fragment_editor_resize_mode_increase">Increase</string>
-    <string name="fragment_editor_resize_mode_decrease">Decrease</string>
+    <string name="fragment_editor_resize_mode_keep">Keep</string>
+    <string name="fragment_editor_resize_mode_retarget">Retarget</string>
 
     <!-- Fragment Editor Quality -->
     <string name="fragment_editor_quality_modes_fidelity">Fidelity</string>
