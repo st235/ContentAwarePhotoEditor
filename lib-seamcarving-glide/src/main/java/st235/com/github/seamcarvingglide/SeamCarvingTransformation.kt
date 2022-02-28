@@ -11,7 +11,7 @@ class SeamCarvingTransformation(
 ): BitmapTransformation() {
 
     private companion object {
-        const val VERSION = 1
+        const val VERSION = 2
         const val ID = "st235.com.github.seamcarvingglide.SeamCarvingTransformation.$VERSION"
 
         val SEAM_CARVER = SeamCarver.create(type = SeamCarver.Type.SPEED)
@@ -27,7 +27,18 @@ class SeamCarvingTransformation(
         outWidth: Int,
         outHeight: Int
     ): Bitmap {
-        val sampledBitmap = Bitmap.createScaledBitmap(toTransform, toTransform.width/ sampling, toTransform.height / sampling, false)
-        return SEAM_CARVER.retarget(sampledBitmap, null, outWidth, outHeight).bitmap
+        val sampledBitmap = Bitmap.createScaledBitmap(
+            toTransform,
+            toTransform.width / sampling,
+            toTransform.height / sampling,
+            false
+        )
+        val targetImage = SEAM_CARVER.retarget(
+            sampledBitmap,
+            null,
+            outWidth /  sampling,
+            outHeight / sampling
+        ).bitmap
+        return targetImage
     }
 }

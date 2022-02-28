@@ -21,6 +21,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.FloatRange
 import androidx.annotation.Px
+import androidx.core.content.res.ResourcesCompat
 
 /**
  * Displays image resources, for example [android.graphics.drawable.Drawable] resources
@@ -108,6 +109,16 @@ class CircularImageView : View {
         invalidate()
     }
 
+    fun setDrawable(drawable: Drawable?) {
+        loadDrawable(drawable)
+        invalidate()
+    }
+
+    fun setBitmap(bitmap: Bitmap?) {
+        loadBitmap(bitmap)
+        invalidate()
+    }
+
     /**
      * Set current image drawable resource
      * @param drawableId is identifier of drawable which will be displayed at image view
@@ -185,8 +196,17 @@ class CircularImageView : View {
      */
     private fun loadDrawable(@DrawableRes drawableId: Int) {
         this.drawableId = drawableId
-        val drawable = resources.getDrawable(drawableId)
+        val drawable = ResourcesCompat.getDrawable(resources, drawableId, null)
+        loadDrawable(drawable)
+    }
+
+    private fun loadDrawable(drawable: Drawable?) {
         targetImage = drawableToBitmap(drawable)
+        targetImage = cropBitmap(targetImage)
+    }
+
+    private fun loadBitmap(bitmap: Bitmap?) {
+        targetImage = bitmap
         targetImage = cropBitmap(targetImage)
     }
 

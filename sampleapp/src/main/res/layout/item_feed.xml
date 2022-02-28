@@ -24,7 +24,6 @@
         android:id="@+id/profile_image"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:orientation="horizontal"
@@ -35,14 +34,15 @@
         app:layout_constraintTop_toBottomOf="@+id/image_view">
 
         <st235.com.github.sampleapp.CircularImageView
+            android:id="@+id/profile_image_view"
             android:layout_width="32dp"
             android:layout_height="32dp"
             app:cl_foreground="@drawable/avatar" />
 
         <TextView
+            android:id="@+id/profile_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
             android:fontFamily="sans-serif-light"
             android:gravity="center"
@@ -57,7 +57,6 @@
         android:layout_width="wrap_content"
         android:layout_height="32dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:orientation="horizontal"
@@ -67,6 +66,7 @@
         app:layout_constraintTop_toBottomOf="@+id/image_view">
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/likes_icon"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:background="?attr/selectableItemBackgroundBorderless"
@@ -75,11 +75,12 @@
             app:srcCompat="@drawable/ic_like" />
 
         <TextView
+            android:id="@+id/likes_count"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
             android:gravity="center"
+            android:textStyle="bold"
             android:text="102K"
             android:textColor="@color/colorGreyOp80"
             android:textSize="15sp" />
@@ -100,7 +101,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_image" />
 
-    <FrameLayout
+    <com.google.android.material.chip.ChipGroup
         android:id="@+id/tag_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
