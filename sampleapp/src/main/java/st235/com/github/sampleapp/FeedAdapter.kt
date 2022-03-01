@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomViewTarget
 import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.chip.Chip
@@ -62,6 +63,7 @@ class FeedAdapter(
 
             payload.likes?.let {
                 holder.likesCountTextView.text = payload.likes.count
+                holder.loadLike(payload.likes.isLiked)
             }
 
             payload.tags?.let {
@@ -110,6 +112,15 @@ class FeedAdapter(
             loadImage(feedItem.image)
 
             loadTags(feedItem.tags)
+            loadLike(feedItem.likes.isLiked)
+        }
+
+        fun loadLike(isLiked: Boolean) {
+            if (isLiked) {
+                likesIconImageView.setImageResource(R.drawable.ic_like_twotone)
+            } else {
+                likesIconImageView.setImageResource(R.drawable.ic_like_twotone_outline)
+            }
         }
 
         fun loadProfileImage(@DrawableRes imageRes: Int) {
@@ -135,7 +146,8 @@ class FeedAdapter(
         fun loadImage(@DrawableRes imageRes: Int) {
             Glide.with(itemView.context)
                 .load(imageRes)
-                .transform(SeamCarvingTransformation(sampling = 2))
+                .apply(RequestOptions.centerCropTransform())
+//                .apply(RequestOptions.bitmapTransform(SeamCarvingTransformation(sampling = 2)))
                 .into(imageView)
         }
 
@@ -144,8 +156,7 @@ class FeedAdapter(
 
             for (tag in tags) {
                 val chip = Chip(context)
-                chip.text  = tag
-
+                chip.text = tag
                 tagLayout.addView(chip)
             }
         }

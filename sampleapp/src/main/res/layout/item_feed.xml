@@ -11,7 +11,7 @@
         android:id="@+id/image_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
         android:scaleType="centerCrop"
         app:layout_constraintDimensionRatio="w,1:1"
         app:layout_constraintTop_toTopOf="parent"
@@ -37,7 +37,7 @@
             android:id="@+id/profile_image_view"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            app:cl_foreground="@drawable/avatar" />
+            app:cl_foreground="@drawable/avatar_1" />
 
         <TextView
             android:id="@+id/profile_title"
@@ -72,6 +72,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:focusable="true"
+            app:tint="@color/colorGreyOp80"
             app:srcCompat="@drawable/ic_like" />
 
         <TextView
@@ -105,7 +106,7 @@
         android:id="@+id/tag_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginLeft="14dp"
         android:layout_marginRight="14dp"
         android:layout_marginTop="14dp"
