@@ -9,6 +9,7 @@ import st235.com.github.seamcarving.data.StatefulMediaRequest
 import st235.com.github.seamcarving.interactors.GalleryInteractor
 import st235.com.github.seamcarving.interactors.StatefulMediaInteractor
 import st235.com.github.seamcarving.interactors.models.ImageInfo
+import st235.com.github.seamcarving.presentation.utils.requireValue
 import st235.com.github.seamcarving.utils.MutableLiveEvent
 
 class GalleryViewModel(
@@ -17,8 +18,15 @@ class GalleryViewModel(
 ): ViewModel() {
 
     private val imagesLiveData = MutableLiveData<List<ImageInfo>>()
+    private val selectedImageLiveData = MutableLiveData<ImageInfo>()
 
     private val mediaRequestsData = MutableLiveEvent<StatefulMediaRequest>()
+
+    fun observeSelectedImage(): LiveData<ImageInfo> = selectedImageLiveData
+
+    fun updateSelectedImage(selectedImageInfo: ImageInfo) {
+        selectedImageLiveData.value = selectedImageInfo
+    }
 
     fun observeAlbumImages(): LiveData<List<ImageInfo>> = imagesLiveData
 
@@ -47,6 +55,14 @@ class GalleryViewModel(
         viewModelScope.launch {
             val items = galleryInteractor.loadNextPage()
             imagesLiveData.value = items
+        }
+    }
+
+    fun removeMedia() {
+        viewModelScope.launch {
+            val imageInfo = selectedImageLiveData.requireValue()
+            galleryInteractor.removeMedia(imageInfo)
+            mediaRequestsData.setValue(StatefulMediaRequest.MediaRemoved)
         }
     }
 

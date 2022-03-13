@@ -146,8 +146,8 @@ class FeedAdapter(
         fun loadImage(@DrawableRes imageRes: Int) {
             Glide.with(itemView.context)
                 .load(imageRes)
-                .apply(RequestOptions.centerCropTransform())
-//                .apply(RequestOptions.bitmapTransform(SeamCarvingTransformation(sampling = 2)))
+//                .apply(RequestOptions.centerCropTransform())
+                .apply(RequestOptions.bitmapTransform(SeamCarvingTransformation(sampling = 2)))
                 .into(imageView)
         }
 

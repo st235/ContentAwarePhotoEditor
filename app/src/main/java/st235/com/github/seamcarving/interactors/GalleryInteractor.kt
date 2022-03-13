@@ -15,7 +15,7 @@ class GalleryInteractor(
     private val dispatcher = Dispatchers.IO
 
     suspend fun loadCurrentPage() = withContext(dispatcher) {
-        galleryRepository.currentImages.map { it.toImageInfo() }
+        galleryRepository.currentMedia.map { it.toImageInfo() }
     }
 
     suspend fun loadNextPage() = withContext(dispatcher) {
@@ -25,6 +25,10 @@ class GalleryInteractor(
 
     suspend fun saveToGallery(bitmap: Bitmap) = withContext(dispatcher) {
         galleryRepository.save("image_${System.currentTimeMillis()}", bitmap)
+    }
+
+    suspend fun removeMedia(imageInfo: ImageInfo) = withContext(dispatcher) {
+        galleryRepository.remove(imageInfo.id)
     }
 
     private fun MediaInfo.toImageInfo(): ImageInfo {

@@ -3,6 +3,7 @@
 
     <!-- Fragment Gallery List -->
     <string name="fragment_gallery_list_create_button_title">Create from gallery</string>
+    <string name="fragment_gallery_list_shared_transition_name">gallery_list_item_shared_transition_%s</string>
 
     <!-- Activity Editor -->
     <string name="activity_editor_select_header">Pick the image</string>
@@ -32,4 +33,8 @@
     <!-- Fragment Editor Quality -->
     <string name="fragment_editor_quality_modes_fidelity">Fidelity</string>
     <string name="fragment_editor_quality_modes_speed">Speed</string>
+
+    <!-- Fragment Gallery Detailed -->
+    <string name="fragment_gallery_detailed_share_button">Share</string>
+    <string name="fragment_gallery_detailed_remove_button">Remove</string>
 </resources>

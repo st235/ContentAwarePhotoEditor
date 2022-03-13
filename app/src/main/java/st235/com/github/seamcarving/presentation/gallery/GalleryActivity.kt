@@ -1,6 +1,7 @@
 package st235.com.github.seamcarving.presentation.gallery
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.FrameLayout
 import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +25,29 @@ class GalleryActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         openGalleryList()
+
+        supportFragmentManager.addOnBackStackChangedListener {
+            updateToolbar()
+        }
+    }
+
+    private fun updateToolbar() {
+        val isBackStackEmpty = supportFragmentManager.backStackEntryCount <= 0
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(!isBackStackEmpty)
+        supportActionBar?.setDisplayShowHomeEnabled(!isBackStackEmpty)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                super.onBackPressed()
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
     }
 
     private fun openGalleryList() {

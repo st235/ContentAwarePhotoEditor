@@ -12,4 +12,6 @@ sealed class StatefulMediaRequest {
 
     data class FinishedFetch(val uri: Uri): StatefulMediaRequest()
 
+    object MediaRemoved: StatefulMediaRequest()
+
 }

@@ -14,13 +14,18 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.transition.ChangeBounds
+import androidx.transition.ChangeTransform
+import androidx.transition.Fade
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import st235.com.github.seamcarving.R
 import st235.com.github.seamcarving.data.StatefulMediaRequest
+import st235.com.github.seamcarving.interactors.models.ImageInfo
 import st235.com.github.seamcarving.presentation.editor.EditorActivity
 import st235.com.github.seamcarving.presentation.gallery.GalleryViewModel
+import st235.com.github.seamcarving.presentation.gallery.detailed.GalleryDetailedFragment
 
 
 class GalleryListFragment : Fragment() {
@@ -32,8 +37,8 @@ class GalleryListFragment : Fragment() {
     private lateinit var createNewProjectFromCameraButton: FloatingActionButton
 
     private lateinit var layoutManager: RecyclerView.LayoutManager
-    private val galleryAdapter = GalleryAdapter {
-        Log.d("HelloWorld", it.toString())
+    private val galleryAdapter = GalleryAdapter { imageInfo, imageView ->
+        onGalleryItemClicked(imageInfo, imageView)
     }
 
     private val onOpenGalleryResultLauncher = registerForActivityResult(
@@ -121,6 +126,24 @@ class GalleryListFragment : Fragment() {
 
     private fun onFileWriteFinished(uri: Uri) {
         startActivity(EditorActivity.launchIntent(requireContext(), uri))
+    }
+
+    private fun onGalleryItemClicked(imageInfo: ImageInfo, view: View) {
+        galleryViewModel.updateSelectedImage(imageInfo)
+
+        val fragment = GalleryDetailedFragment.create(view.transitionName)
+        fragment.sharedElementEnterTransition = GalleryItemTransition()
+        fragment.enterTransition = Fade()
+        fragment.exitTransition = Fade()
+        fragment.sharedElementReturnTransition = GalleryItemTransition()
+        fragment.postponeEnterTransition()
+
+        parentFragmentManager
+            .beginTransaction()
+            .addSharedElement(view, view.transitionName)
+            .replace(R.id.fragment_container, fragment, GalleryDetailedFragment.TAG)
+            .addToBackStack(null)
+            .commit()
     }
 
     private inner class FabCollapseScrollListener : RecyclerView.OnScrollListener() {

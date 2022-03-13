@@ -20,14 +20,19 @@ class GalleryRepository(
     private var page: Int = 0
 
     @get:Synchronized
-    val currentImages: List<MediaInfo>
+    val currentMedia: List<MediaInfo>
     get() {
         val imagesCopy = mutableListOf<MediaInfo>()
-        imagesCopy.addAll(images)
+        imagesCopy.addAll(images.values)
         return imagesCopy
     }
 
-    private val images = mutableListOf<MediaInfo>()
+    private val images = mutableMapOf<String, MediaInfo>()
+
+    @Synchronized
+    fun findById(id: String): MediaInfo? {
+        return images[id]
+    }
 
     @Synchronized
     fun save(title: String, origin: Bitmap): Uri? {
@@ -41,8 +46,17 @@ class GalleryRepository(
     fun loadNextPage(): List<MediaInfo> {
         val nextPage = mediaScanner.load(ALBUM_TITLE, MediaScanner.Page(PAGE_LIMIT, page * PAGE_LIMIT))
         page += 1
-        images.addAll(nextPage)
-        return currentImages
+        for (mediaInfo in nextPage) {
+            images[mediaInfo.id] = mediaInfo
+        }
+        return currentMedia
+    }
+
+    @Synchronized
+    fun remove(id: String) {
+        val mediaInfo = images.getValue(id)
+        mediaSaver.delete(mediaInfo.uri)
+        images.remove(id)
     }
 
     @Synchronized

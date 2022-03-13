@@ -16,7 +16,7 @@ import st235.com.github.seamcarving.interactors.models.ImageSize
 import st235.com.github.seamcarving.presentation.components.AspectRatioFrameLayout
 
 class GalleryAdapter(
-    private val onItemClickListener: (item: ImageInfo) -> Unit
+    private val onItemClickListener: (item: ImageInfo, view: View) -> Unit
 ): RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
 
     private val asyncListDiffer = AsyncListDiffer(this, ItemCallback())
@@ -39,6 +39,7 @@ class GalleryAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
 
+        holder.bindTransitionName(item.id)
         holder.setAspectRatio(item.size)
         holder.loadImage(item.uri)
     }
@@ -50,6 +51,10 @@ class GalleryAdapter(
         }
 
         payloads.filterIsInstance<Payload>().forEach { payload ->
+            payload.id?.let {
+                holder.bindTransitionName(payload.id)
+            }
+
             payload.value?.let {
                 holder.loadImage(payload.value)
             }
@@ -74,8 +79,17 @@ class GalleryAdapter(
 
             cardView.setOnClickListener {
                 val item = items[adapterPosition]
-                onItemClickListener(item)
+                onItemClickListener(item, imageView)
             }
+        }
+
+        fun bindTransitionName(id: String) {
+            val context = imageView.context
+            val sharedTransitionName = context.getString(
+                R.string.fragment_gallery_list_shared_transition_name, id
+            )
+
+            imageView.transitionName = sharedTransitionName
         }
 
         fun setAspectRatio(imageSize: ImageSize) {
