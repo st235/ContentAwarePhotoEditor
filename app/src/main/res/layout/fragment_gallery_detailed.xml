@@ -44,13 +44,14 @@
 
     <Button
         android:id="@+id/share_button"
-        style="@style/Widget.Material3.Button"
+        style="@style/Widget.Material3.Button.TonalButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="18dp"
+        app:elevation="32dp"
         android:text="@string/fragment_gallery_detailed_share_button"
         app:layout_constraintBottom_toTopOf="@id/delete_button"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +60,7 @@
 
     <Button
         android:id="@+id/delete_button"
-        style="@style/Widget.Material3.Button.TonalButton"
+        style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"

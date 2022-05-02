@@ -6,7 +6,7 @@ import kotlin.math.sqrt
 import st235.com.github.seamcarving.Energy
 import st235.com.github.seamcarving.images.CarvableImage
 
-internal class GradientEnergy: Energy() {
+internal class SobelEnergy: Energy() {
 
     override fun energyAt(i: Int, j: Int, image: CarvableImage): Long {
         if (i == 0 || i == image.height - 1 || j == 0 || j == image.width - 1) {

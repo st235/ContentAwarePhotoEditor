@@ -47,7 +47,7 @@ class AspectRatioFrameLayout: FrameLayout {
             realWidth = ((maxHeight * aspectRatio.width).toDouble() / aspectRatio.height).toInt()
         }
 
-        setMeasuredDimension(realWidth, realHeight)
+        setMeasuredDimension(realWidth  + paddingLeft + paddingRight, realHeight + paddingTop + paddingBottom)
 
         for (childIndex in 0 until childCount) {
             val view = getChildAt(childIndex)

@@ -3,10 +3,10 @@ package st235.com.github.seamcarving.algorithms
 import android.graphics.Bitmap
 import st235.com.github.seamcarving.Energy
 import st235.com.github.seamcarving.SeamCarver
-import st235.com.github.seamcarving.images.BitmapCarvableImage
 import st235.com.github.seamcarving.images.CarvableImage
 import st235.com.github.seamcarving.utils.CarvingHelper
 import st235.com.github.seamcarving.utils.asCarvingResult
+import st235.com.github.seamcarving.utils.toCarvableImage
 
 internal class SimpleDynamicSeamCarver(
     private val energy: Energy
@@ -24,7 +24,7 @@ internal class SimpleDynamicSeamCarver(
         targetWidth: Int,
         targetHeight: Int
     ): SeamCarver.CarvingResult {
-        val carvableImage = BitmapCarvableImage(image, mask)
+        val carvableImage = image.toCarvableImage(mask)
         return retargetHeight(retargetWidth(carvableImage, targetWidth), targetHeight).asCarvingResult()
     }
 

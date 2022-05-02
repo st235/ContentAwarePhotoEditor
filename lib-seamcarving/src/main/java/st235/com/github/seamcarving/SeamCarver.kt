@@ -3,8 +3,7 @@ package st235.com.github.seamcarving
 import android.graphics.Bitmap
 import st235.com.github.seamcarving.algorithms.FastSeamCarver
 import st235.com.github.seamcarving.algorithms.SimpleDynamicSeamCarver
-import st235.com.github.seamcarving.energies.GradientEnergy
-import st235.com.github.seamcarving.images.CarvableImage
+import st235.com.github.seamcarving.energies.SobelEnergy
 
 interface SeamCarver {
 
@@ -50,7 +49,7 @@ interface SeamCarver {
     companion object {
 
         fun create(
-            energy: Energy = GradientEnergy(),
+            energy: Energy = SobelEnergy(),
             type: Type = Type.FIDELITY
         ): SeamCarver {
             return when(type) {
