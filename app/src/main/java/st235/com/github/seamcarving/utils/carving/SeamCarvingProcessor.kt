@@ -55,7 +55,7 @@ class SeamCarvingProcessor(
         val removeWidth = removeArea[0]
         val removeHeight = removeArea[1]
 
-        val resizingWidth = targetSize[0] == originWidth
+        val resizingWidth = targetSize[0] != originWidth
 
         val interimCarvingResult = if (removeHeight == 0 && removeWidth == 0) {
             SeamCarver.CarvingResult(image, filterMap)
