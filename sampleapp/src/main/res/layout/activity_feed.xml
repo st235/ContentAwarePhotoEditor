@@ -26,4 +26,20 @@
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
+    <github.com.st235.lib_samurai.SamuraiView
+        android:id="@+id/samurai_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/samurai_next_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:text="@string/onboarding_close"
+            android:layout_margin="16dp" />
+
+    </github.com.st235.lib_samurai.SamuraiView>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -7,8 +7,8 @@
     android:background="@color/colorWhite"
     tools:context=".FeedActivity">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/image_view"
+    <FrameLayout
+        android:id="@+id/images_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="32dp"
@@ -18,7 +18,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/seam_carving_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/center_crop_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:scaleType="centerCrop" />
+
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/profile_image"
@@ -31,7 +47,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_view">
+        app:layout_constraintTop_toBottomOf="@+id/images_layout">
 
         <st235.com.github.sampleapp.CircularImageView
             android:id="@+id/profile_image_view"
@@ -63,7 +79,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_view">
+        app:layout_constraintTop_toBottomOf="@+id/images_layout">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/likes_icon"

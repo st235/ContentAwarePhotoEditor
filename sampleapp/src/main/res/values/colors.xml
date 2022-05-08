@@ -3,6 +3,7 @@
     <color name="colorGreyOp8">#14000000</color>
     <color name="colorGreyOp16">#28000000</color>
     <color name="colorGreyOp80">#CC000000</color>
+    <color name="colorWhiteOp95">#EAFFFFFF</color>
 
     <color name="md_theme_light_primary">#A7392D</color>
     <color name="md_theme_light_onPrimary">#FFFFFF</color>

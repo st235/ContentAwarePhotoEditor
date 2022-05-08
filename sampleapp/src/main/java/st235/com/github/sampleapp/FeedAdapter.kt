@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
@@ -20,6 +21,7 @@ import com.google.android.material.chip.ChipGroup
 import st235.com.github.seamcarvingglide.SeamCarvingTransformation
 
 class FeedAdapter(
+    private val onViewBindListener: (view: View, item: FeedItem, position: Int) -> Unit,
     private val onItemClickListener: (item: FeedItem) -> Unit
 ): RecyclerView.Adapter<FeedAdapter.ViewHolder>() {
 
@@ -80,7 +82,9 @@ class FeedAdapter(
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val imageView: ImageView = itemView.findViewById(R.id.image_view)
+        val imagesLayout: FrameLayout = itemView.findViewById(R.id.images_layout)
+        val seamCarvingImageView: ImageView = itemView.findViewById(R.id.seam_carving_image_view)
+        val centerCropImageView: ImageView = itemView.findViewById(R.id.center_crop_image_view)
         val profileImageView: CircularImageView = itemView.findViewById(R.id.profile_image_view)
         val profileTitleTextView: TextView = itemView.findViewById(R.id.profile_title)
         val likesIconImageView: ImageView = itemView.findViewById(R.id.likes_icon)
@@ -97,6 +101,13 @@ class FeedAdapter(
             itemView.isClickable = true
             itemView.isFocusable = true
 
+            imagesLayout.setOnTouchListener(
+                ImageSwappingListener(
+                    seamCarvingImageView,
+                    centerCropImageView
+                )
+            )
+
             itemView.setOnClickListener {
                 val item = items[adapterPosition]
                 onItemClickListener(item)
@@ -104,6 +115,8 @@ class FeedAdapter(
         }
 
         fun bind(feedItem: FeedItem) {
+            onViewBindListener(itemView, items[adapterPosition], adapterPosition)
+
             profileTitleTextView.text = feedItem.author.name
             likesCountTextView.text = feedItem.likes.count
             descriptionTextView.text = feedItem.description
@@ -146,9 +159,13 @@ class FeedAdapter(
         fun loadImage(@DrawableRes imageRes: Int) {
             Glide.with(itemView.context)
                 .load(imageRes)
-//                .apply(RequestOptions.centerCropTransform())
                 .apply(RequestOptions.bitmapTransform(SeamCarvingTransformation(sampling = 2)))
-                .into(imageView)
+                .into(seamCarvingImageView)
+
+            Glide.with(itemView.context)
+                .load(imageRes)
+                .apply(RequestOptions.centerCropTransform())
+                .into(centerCropImageView)
         }
 
         fun loadTags(tags: List<String>) {
