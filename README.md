@@ -17,7 +17,7 @@ The main idea of seam carving is to provide lossless way of retargeting images b
 
 | Original image | Seams to remove | Result | 
 | ------------- | ------------- | ------------- |
-| <img src="/images/carving/origin.jpg" width="574" height="396">  | <img src="/images/carving/seams.jpeg" width="574" height="396">  | <img src="/images/carving/results.jpeg" width="350" height="350"> |
+| <img src="/images/carving/origin.jpg" width="287" height="198">  | <img src="/images/carving/seams.jpeg" width="287" height="198">  | <img src="/images/carving/results.jpeg" width="198" height="198"> |
 
 As you can see the image has been trimmed by removing content in-between important objects.
 
@@ -29,8 +29,8 @@ We are using [Sobel operator](https://en.wikipedia.org/wiki/Sobel_operator) to f
 
 | Original image | Energy | Notes |
 | ------------- | ------------- | ------------- |
-| <img src="/images/energy/origin_building2.jpeg" width="240" height="320">  | <img src="/images/energy/sobel_building2.jpeg" width="240" height="320">  | An example with clearly distinguishable background |
-| <img src="/images/energy/origin_building1.jpeg" width="240" height="320">  | <img src="/images/energy/sobel_building1.jpeg" width="240" height="320">  | Clouds make the background less distinguishable than on example above, but still keeps the object aside from background |
+| <img src="/images/energy/origin_building2.jpeg" width="240" height="320">  | <img src="/images/energy/sobel_building2.jpeg" width="240" height="320">  | An example with clearly <br> distinguishable background |
+| <img src="/images/energy/origin_building1.jpeg" width="240" height="320">  | <img src="/images/energy/sobel_building1.jpeg" width="240" height="320">  | Clouds make the background <br> less distinguishable than on example above, <br> but still keeps the object aside from background |
 | <img src="/images/energy/origin_flower.jpeg" width="240" height="320">  | <img src="/images/energy/sobel_flower.jpeg" width="240" height="320">  | Hardly distinguishable background |
 
 ### Compexities concerns
@@ -74,11 +74,11 @@ Picasso.get()
 
 | Center Crop | Seams Carving |
 | ------------- | ------------- |
-| <img src="/images/sampleapp/default/balloons1.jpeg" width="591" height="853">  | <img src="/images/sampleapp/carving/balloons1.jpeg" width="591" height="853">  |
-| <img src="/images/sampleapp/default/building1.jpeg" width="591" height="853">  | <img src="/images/sampleapp/carving/building1.jpeg" width="591" height="853">  |
-| <img src="/images/sampleapp/default/lego1.jpeg" width="591" height="853">  | <img src="/images/sampleapp/carving/lego1.jpeg" width="591" height="853">  |
-| <img src="/images/sampleapp/default/mountain1.jpeg" width="591" height="978">  | <img src="/images/sampleapp/carving/mountain1.jpeg" width="591" height="978">  |
-| <img src="/images/sampleapp/default/tree1.jpeg" width="591" height="806">  | <img src="/images/sampleapp/carving/tree1.jpeg" width="591" height="806">  |
+| <img src="/images/sampleapp/default/balloons1.jpeg" width="296" height="427">  | <img src="/images/sampleapp/carving/balloons1.jpeg" width="296" height="427">  |
+| <img src="/images/sampleapp/default/building1.jpeg" width="296" height="427">  | <img src="/images/sampleapp/carving/building1.jpeg" width="296" height="427">  |
+| <img src="/images/sampleapp/default/lego1.jpeg" width="296" height="427">  | <img src="/images/sampleapp/carving/lego1.jpeg" width="296" height="427">  |
+| <img src="/images/sampleapp/default/mountain1.jpeg" width="296" height="489">  | <img src="/images/sampleapp/carving/mountain1.jpeg" width="296" height="489">  |
+| <img src="/images/sampleapp/default/tree1.jpeg" width="296" height="403">  | <img src="/images/sampleapp/carving/tree1.jpeg" width="296" height="403">  |
 
 __P.S.: More examples available at sample app!__
 
@@ -94,7 +94,7 @@ The editor allows your to keep the same image size but remove some unwanted obje
 
 | Original image | Editor | Result | 
 | ------------- | ------------- | ------------- |
-| <img src="/images/editor/removal/origin.jpeg" width="480" height="640">  | <img src="/images/editor/removal/editor_removal.jpeg" width="270" height="585">  | <img src="/images/editor/removal/result.jpeg" width="480" height="640"> |
+| <img src="/images/editor/removal/origin.jpeg" width="240" height="320">  | <img src="/images/editor/removal/editor_removal.jpeg" width="135" height="292">  | <img src="/images/editor/removal/result.jpeg" width="240" height="320"> |
 
 ## Keep object
 
@@ -102,7 +102,7 @@ Moreover, the editor allows your to keep some objects that are hardly distinguis
 
 | Original image | Editor | Result | 
 | ------------- | ------------- | ------------- |
-| <img src="/images/editor/keeping/origin.jpeg" width="640" height="480">  | <img src="/images/editor/keeping/editor_keeping.jpeg" width="270" height="585">  | <img src="/images/editor/keeping/result.jpeg" width="480" height="480"> |
+| <img src="/images/editor/keeping/origin.jpeg" width="320" height="240">  | <img src="/images/editor/keeping/editor_keeping.jpeg" width="135" height="292">  | <img src="/images/editor/keeping/result.jpeg" width="240" height="240"> |
 
 # Questions
 
