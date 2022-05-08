@@ -5,11 +5,10 @@ import java.nio.ByteBuffer
 import st235.com.github.seamcarving.images.ByteArrayCarvableImage
 import st235.com.github.seamcarving.images.CarvableImage
 
-
-fun Bitmap.toCarvableImage(maskMatrix: Array<IntArray>?): CarvableImage {
-    val dst = ByteBuffer.allocate(byteCount)
-    copyPixelsToBuffer(dst)
-    val byteArray = dst.array()
+internal fun Bitmap.toCarvableImage(maskMatrix: Array<IntArray>?): CarvableImage {
+    val buffer = ByteBuffer.allocate(byteCount)
+    copyPixelsToBuffer(buffer)
+    val byteArray = buffer.array()
 
     return ByteArrayCarvableImage(
         width = width,

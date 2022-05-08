@@ -1,6 +1,8 @@
 package st235.com.github.seamcarving.energies
 
 import android.graphics.Color
+import java.lang.Math.pow
+import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt
 import st235.com.github.seamcarving.Energy
@@ -8,26 +10,44 @@ import st235.com.github.seamcarving.images.CarvableImage
 
 internal class SobelEnergy: Energy() {
 
+    private companion object {
+
+        val GX = arrayOf(
+            intArrayOf(1, 0, -1),
+            intArrayOf(2, 0, -2),
+            intArrayOf(1, 0, -1)
+        )
+
+        val GY = arrayOf(
+            intArrayOf(1, 2, 1),
+            intArrayOf(0, 0, 0),
+            intArrayOf(-1, -2, -1)
+        )
+
+    }
+
+
     override fun energyAt(i: Int, j: Int, image: CarvableImage): Long {
         if (i == 0 || i == image.height - 1 || j == 0 || j == image.width - 1) {
             return MAX_POSSIBLE_ENERGY
         }
 
-        val right = image.getPixelAt(i, j + 1)
-        val left = image.getPixelAt(i, j - 1)
+        var dx = 0.0
+        var dy = 0.0
 
-        val top = image.getPixelAt(i + 1, j)
-        val down = image.getPixelAt(i - 1, j)
+        for (di in 0 until 3) {
+            for (dj in 0 until 3) {
+                val gxFactor = GX[di][dj]
+                val gyFactor = GY[di][dj]
 
-        val dx = (Color.red(right) - Color.red(left)).toDouble().pow(2) +
-                (Color.green(right) - Color.green(left)).toDouble().pow(2) +
-                (Color.blue(right) - Color.blue(left)).toDouble().pow(2)
+                val pixel = image.getPixelAt(i - 1 + di, j - 1 + dj)
 
-        val dy = (Color.red(top) - Color.red(down)).toDouble().pow(2) +
-                (Color.green(top) - Color.green(down)).toDouble().pow(2) +
-                (Color.blue(top) - Color.blue(down)).toDouble().pow(2)
+                dx += gxFactor * (Color.red(pixel) + Color.green(pixel) + Color.blue(pixel))
+                dy += gyFactor * (Color.red(pixel) + Color.green(pixel) + Color.blue(pixel))
+            }
+        }
 
-        return sqrt(dx + dy).toLong()
+        return sqrt(dx.pow(2.0) + dy.pow(2.0)).toLong()
     }
 
 }
